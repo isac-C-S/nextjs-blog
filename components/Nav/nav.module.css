@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+.container {
+    background-color: white;  /* Cor de fundo branca */
+    height: 90px;
+    width: 100vw;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Sombra suave */
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    font-family: "Playfair Display", serif;
+   
+    font-style: normal;
+  }
+  
+  .container:before {
+    content: '';  /* Criando uma borda adicional */
+    position: absolute;
+    top: -5px;  /* Posicionando a borda acima da container */
+    left: -5px;  /* Posicionando a borda à esquerda */
+    right: -5px;  /* Posicionando a borda à direita */
+    bottom: -5px;  /* Posicionando a borda abaixo da container */
+    border: 3px solid white;  /* Borda adicional branca */
+    border-radius: 15px;  /* Borda arredondada com mais profundidade */
+    z-index: -1;  /* Colocando a borda abaixo da container */
+  }
+
+  .container_logo{
+    width: 200px;
+    height: 90px;
+    margin: 0;
+    margin-left: 50px;
+  }
+
+  .container_logo img{
+    height: 90px;
+    width: 200px;
+  }
+
+  .container_ul{
+    width: 50%;
+    margin-left: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container_ul ul{
+    display: flex;
+    flex-direction: row;
+    list-style: none; 
+    width: 100%;
+    justify-content: space-evenly;
+    font-weight: bold;
+  
+  }
+  
+  .container_ul p:hover{
+    color: pink;
+    cursor: pointer;
+  }
+
+  .pesquisa{
+    align-items: center;
+    display: flex
+  }
