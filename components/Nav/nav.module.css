@@ -17,7 +17,6 @@
     position: absolute;
     top: -5px;  /* Posicionando a borda acima da container */
     left: -5px;  /* Posicionando a borda à esquerda */
-    right: -5px;  /* Posicionando a borda à direita */
     bottom: -5px;  /* Posicionando a borda abaixo da container */
     border: 3px solid white;  /* Borda adicional branca */
     border-radius: 15px;  /* Borda arredondada com mais profundidade */
@@ -62,4 +61,33 @@
   .pesquisa{
     align-items: center;
     display: flex
+  }
+
+  @media (max-width: 1025px) {
+    .container_ul {
+      margin-left: 0px;
+  }
+
+  }
+
+  @media (max-width: 770px) {
+    .container_ul {
+     display: none;
+  }
+
+  .container{
+    justify-content: space-evenly;
+  }
+
+  }
+
+
+  @media (max-width: 430px) {
+    .pesquisa{
+      display: none;
+    }
+
+    .container_logo{
+      margin: 0;
+    }
   }

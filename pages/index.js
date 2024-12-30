@@ -1,3 +1,4 @@
+import Carrousel from "../components/Carrousel/carrousel";
 import Nav from "../components/Nav/nav";
 
 
@@ -7,7 +8,7 @@ export default function Home() {
 
       <main>
         <Nav/>
-
+        <Carrousel/>
 
       </main>
        

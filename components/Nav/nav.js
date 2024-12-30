@@ -8,6 +8,7 @@ export default function Nav() {
   
         <div className={styles.container}>
             <div className={styles.container_logo}>
+                
                 <Image src="/Logo.svg" alt="Receitas da Naty" width={200} height={100} />
             </div>
 
