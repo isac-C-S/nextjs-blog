@@ -1,0 +1,135 @@
+.Conteudo {
+    background-color: white;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    font-family: 'Cinzel', serif; /* Usar Cinzel para cabeçalhos */
+  }
+  
+  .posts:hover {
+    cursor: pointer;
+  }
+  
+  .posts {
+    display: flex;
+    flex-direction: row;
+    padding-right: 10px;
+    margin-bottom: 50px;
+  }
+  
+  .posts_txt {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding-top: 30px;
+  }
+  
+  .data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .data h4 {
+    margin-right: 30px;
+    color: pink;
+    line-height: 1.6; /* Melhor legibilidade */
+  }
+  
+  .data p {
+    font-style: italic;
+    font-family: 'Lora', serif; /* Fonte padrão para o corpo */
+    line-height: 1.6; /* Melhor legibilidade */
+  }
+  
+  .img {
+    width: 40%;
+  }
+  
+  .titulo {
+    font-size: x-small;
+  }
+  
+  .texto {
+    font-family: 'Lora', serif; /* Fonte padrão para o corpo */
+    line-height: 1.6; /* Melhor legibilidade */
+  }
+  
+  .link {
+    font-weight: bold;
+  }
+  
+  .link a {
+    position: relative; /* Necessário para o ::after */
+    text-decoration: none; /* Remove o sublinhado padrão */
+    color: black; /* Cor inicial do link */
+    transition: color 0.3s ease; /* Suaviza a transição de cor */
+  }
+  
+  .link a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* Posiciona a linha ligeiramente abaixo do texto */
+    width: 0; /* Inicialmente sem largura */
+    height: 2px; /* Altura da linha */
+    background-color: pink; /* Cor da linha */
+    transition: width 0.3s ease; /* Suaviza o crescimento da linha */
+  }
+  
+  .posts:hover .link a {
+    color: pink; /* Muda a cor do texto ao passar o mouse */
+  }
+  
+  .posts:hover .link a::after {
+    width: 100%; /* Expande a linha para o tamanho do texto */
+  }
+  
+  .paginacao{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 400px;
+    justify-content: space-evenly;
+  }
+
+  .paginacao span:hover{
+    cursor: pointer;
+    color: pink;
+  }
+
+  @media (max-width: 1050px) {
+    .Conteudo{
+        padding-left: 10px;
+        
+    }
+
+    .img img{
+        height: 100%;
+      }
+
+    .posts_txt{
+        padding: 0;
+        padding-left: 10px;
+    }
+
+    .data{
+        height: 20px;
+    }
+
+    .paginacao{
+        padding: 0px 250px;
+    }
+       
+  }
+
+  @media (max-width: 800px) {
+
+    .Conteudo{
+        margin-top: 80px;
+        background-color: white;
+    }
+
+  }

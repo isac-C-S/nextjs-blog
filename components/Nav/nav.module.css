@@ -2,7 +2,7 @@
 .container {
     background-color: white;  /* Cor de fundo branca */
     height: 90px;
-    width: 100vw;
+    width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Sombra suave */
     position: relative;
     display: flex;
