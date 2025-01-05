@@ -1,0 +1,68 @@
+.SeInscreva{
+  margin-top: 30px;
+}
+
+.titulo {
+    position: relative;
+    display: inline-block;
+    border: 2px solid pink;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+  }
+  
+  .titulo::after {
+    content: ""; /* Cria o triângulo */
+    position: absolute;
+    bottom: -10px; /* Posiciona o triângulo abaixo do elemento */
+    left: 50%; /* Centraliza o triângulo horizontalmente */
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent; /* Lado esquerdo transparente */
+    border-right: 10px solid transparent; /* Lado direito transparente */
+    border-top: 10px solid pink; /* Cor do triângulo */
+  }
+
+  .redes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 30px;
+    padding: 0 100px;
+  }
+
+  .redes div {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    border: 0.001px solid #a9a9a9;
+    border-radius: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.redes img {
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+}
+
+.redes div:hover{
+  cursor: pointer;
+  background-color: pink;
+}
+  
+  
+@media (max-width: 1050px) {
+  .redes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 30px;
+    padding: 0 30px;
+  }
+
+
+}

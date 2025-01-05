@@ -1,0 +1,6 @@
+.SideBars{
+    height: 100%;
+    width: 30%;
+    font-family: 'Lora', serif; /* Fonte padrão para o corpo */
+    padding: 0 20px;
+}

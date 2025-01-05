@@ -1,0 +1,79 @@
+.TopPosts{
+    margin-top: 50px;
+}
+
+.titulo {
+    position: relative;
+    display: inline-block;
+    border: 2px solid pink;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+  }
+  
+  .titulo::after {
+    content: ""; /* Cria o triângulo */
+    position: absolute;
+    bottom: -10px; /* Posiciona o triângulo abaixo do elemento */
+    left: 50%; /* Centraliza o triângulo horizontalmente */
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent; /* Lado esquerdo transparente */
+    border-right: 10px solid transparent; /* Lado direito transparente */
+    border-top: 10px solid pink; /* Cor do triângulo */
+  }
+
+.lista{
+    list-style: none;
+    padding: 0;
+  }
+
+  .posts{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    list-style: none;
+    margin-top: 20px;
+    height: 80px;
+  }
+
+
+.img img{
+    margin-right: 30px;
+    border-radius: 50%;
+}
+
+.posts p{
+   font-weight: bolder;
+    color: #000;
+    margin-bottom: 10px;
+
+}
+
+
+.numero {
+    color: pink;
+    font-size: 30px;
+    margin-left: 55px;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.posts:hover .numero {
+    display: flex;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+
+  
+@media (max-width: 1050px) {
+  .numero {
+    margin-left: 0;
+   
+  }
+
+}

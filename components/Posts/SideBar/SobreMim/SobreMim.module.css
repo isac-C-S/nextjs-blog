@@ -1,0 +1,46 @@
+.sobreMim{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo {
+    position: relative;
+    display: inline-block;
+    border: 2px solid pink;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Cinzel', serif; /* Usar Cinzel para cabeçalhos */
+  }
+  
+  .titulo::after {
+    content: ""; /* Cria o triângulo */
+    position: absolute;
+    bottom: -10px; /* Posiciona o triângulo abaixo do elemento */
+    left: 50%; /* Centraliza o triângulo horizontalmente */
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent; /* Lado esquerdo transparente */
+    border-right: 10px solid transparent; /* Lado direito transparente */
+    border-top: 10px solid pink; /* Cor do triângulo */
+  }
+
+  .img{
+    margin-top: 30px;
+    width: 100%;
+    height: 220px;
+  }
+
+  .img img{
+    width: 100%;
+    height: 220px;
+  }
+
+  .txt{
+    padding: 0px 5px;
+    text-align: center;
+    font-weight: 500;
+  }
+  
