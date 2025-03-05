@@ -1,3 +1,4 @@
+import Anuncios from "./Anuncios/Anuncios";
 import SeInscreva from "./seInscreva/SeInscreva";
 import styles from "./sidebar.module.css";
 import SobreMim from "./SobreMim/sobreMim";
@@ -11,6 +12,7 @@ export default function SideBar() {
             <SobreMim/>
             <SeInscreva/>    
             <TopPosts/>
+            <Anuncios/>
           </div>
          
       

@@ -4,3 +4,16 @@
     font-family: 'Lora', serif; /* Fonte padrão para o corpo */
     padding: 0 20px;
 }
+
+@media (max-width: 800px) {
+    .SideBars {
+       padding-top: 100px;
+    }
+}
+
+@media (max-width: 500px) {
+    .SideBars {
+      width: 100%;
+    }
+}
+
