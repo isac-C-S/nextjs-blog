@@ -1,8 +1,11 @@
 import Slider from "react-slick";
 import styles from"./carrousel.module.css"
-
+import {BuscarReceitas2} from "../../components/Posts/Buscador";
+import { useEffect , useState} from "react";
 
 export default function Carrousel() {
+  const [receitas,setReceitas] = useState([]);
+
   const settings = {
     dots: true,
     infinite: false,
@@ -36,6 +39,10 @@ export default function Carrousel() {
     ],
   };
 
+  useEffect(() => {
+    BuscarReceitas2(setReceitas);
+  }, []);
+
   return (
     <div className={styles.container}>
 
@@ -44,6 +51,7 @@ export default function Carrousel() {
         <div className={styles.containerItem}>
            
             <img src="/item1.jpg" alt="Imagem 1" />
+            
             <div className={styles.borda}/>
               <div className={styles.titulo}>
                 <div className={styles.tituloP}>

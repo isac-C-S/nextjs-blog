@@ -93,12 +93,23 @@
     align-items: center;
     padding: 0px 400px;
     justify-content: space-evenly;
+    font-size: larger;
   }
 
   .paginacao span:hover{
     cursor: pointer;
     color: pink;
   }
+
+  .paginacao {
+    display: flex;
+    gap: 8px;
+}
+
+.paginaAtual {
+    color: pink;
+    font-weight: bold;
+}
 
   @media (max-width: 1050px) {
     .Conteudo{
