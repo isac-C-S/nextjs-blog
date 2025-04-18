@@ -91,9 +91,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0px 400px;
-    justify-content: space-evenly;
+    justify-content: center; /* Center the pagination */
     font-size: larger;
+    padding: 0; /* Remove the fixed padding */
   }
 
   .paginacao span:hover{
@@ -111,84 +111,198 @@
     font-weight: bold;
 }
 
-  @media (max-width: 1050px) {
-    .Conteudo{
-        padding-left: 10px;
-        
-    }
+.paginacaoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
 
-    .img img{
-        height: 100%;
-      }
+.paginaControle,
+.paginaNumero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid #ffccd5;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+  font-family: 'Cinzel', serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #ff8fab;
+}
 
-    .posts_txt{
-        padding: 0;
-        padding-left: 10px;
-        
-    }
+.paginaControle:hover,
+.paginaNumero:hover {
+  background-color: #ffecef;
+}
 
-    .data{
-        height: 20px;
-        margin-bottom: 10px;
-        margin-top: 20px;
-    }
+.paginaAtual {
+  background-color: #ffccd5;
+  color: #333;
+  border-color: #ffccd5;
+  font-weight: bold;
+}
 
-    .link{
-      margin-top: 130px;
-    }
+.paginaAtual:hover {
+  background-color: #ffccd5;
+}
 
-    .paginacao{
-        padding: 0px 250px;
-    }
-       
+.paginaDesabilitada {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.paginaDesabilitada:hover {
+  background-color: white;
+  transform: none; /* No grow effect when disabled */
+}
+
+.paginaEllipsis {
+  padding: 0 8px;
+  color: #ff8fab;
+  font-weight: bold;
+}
+
+/* Adjust original pagination related styles to avoid conflicts */
+.paginacao {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* Center the pagination */
+  font-size: larger;
+  padding: 0; /* Remove the fixed padding */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .paginacaoContainer {
+    gap: 6px;
+  }
+  
+  .paginaControle,
+  .paginaNumero {
+    min-width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .paginacaoContainer {
+    gap: 4px;
+    margin: 15px 0;
+  }
+  
+  .paginaControle,
+  .paginaNumero {
+    min-width: 40px; /* Larger touch targets */
+    height: 40px; /* Taller buttons for easier tapping */
+    padding: 0 4px;
+    font-size: 14px;
+  }
+}
+
+/* Extra small screens / narrow phones */
+@media (max-width: 360px) {
+  .paginacaoContainer {
+    gap: 3px;
+  }
+  
+  /* Hide ellipsis on very small screens to save space */
+  .paginaEllipsis {
+    display: none;
+  }
+  
+  /* Optimize space by showing only essential controls */
+  .paginaControle {
+    min-width: 36px;
+    height: 36px;
+    padding: 0;
+  }
+  
+  .paginaNumero {
+    min-width: 36px;
+    height: 36px;
+    padding: 0;
+  }
+}
+
+/* Fix media query conflicts */
+@media (max-width: 800px) {
+  .Conteudo{
+    margin-top: 100px;
+    background-color: white;
   }
 
-  @media (max-width: 800px) {
-
-    .Conteudo{
-        margin-top: 100px;
-        background-color: white;
-    }
-
-    .posts{
-      
-    }
-
-    .link{
-      margin: 0;
-    }
-
-    .paginacao{
-        padding: 0px 100px;
-    }
-
+  .link{
+    margin: 0;
   }
 
-  @media (max-width: 500px) {
-    .Conteudo {
-       width: 100%;
-     
-    }
+  .paginacao {
+    padding: 0 !important; /* Override the fixed padding completely */
+  }
+}
 
-    .posts{
-      flex-direction: column;
-      width: 100%;
-      
-    }
+@media (max-width: 1050px) {
+  .Conteudo{
+    padding-left: 10px;
+  }
 
-    .img {
-      width: 100%;
-    }
+  .img img{
+    height: 100%;
+  }
 
-    .img img{
-      width: 100%;
-    }
+  .posts_txt{
+    padding: 0;
+    padding-left: 10px;
+  }
 
-    .posts_txt{
-      width: 100%;
-    }
+  .data{
+    height: 20px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
 
-    .data{
-      width: 100%;
-    }
+  .link{
+    margin-top: 130px;
+  }
+
+  .paginacao {
+    padding: 0 !important; /* Override the fixed padding completely */
+  }
+}
+
+@media (max-width: 500px) {
+  .Conteudo {
+    width: 100%;
+  }
+
+  .posts{
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .img {
+    width: 100%;
+  }
+
+  .img img{
+    width: 100%;
+  }
+
+  .posts_txt{
+    width: 100%;
+  }
+
+  .data{
+    width: 100%;
+  }
 }

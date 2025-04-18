@@ -1,11 +1,12 @@
 import Image from "next/image";
 import styles from "./categorias.module.css";
 import { useState, useEffect } from "react";
+import {BuscarReceitasPorCategoria} from "./Buscador";
 
 
-
-export default function Categorias() {
+export default function Categorias({setReceitas}) {
   const [categorias, setCategorias] = useState([]);
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
 
   //Busca Todas as Categorias Cadastradas
   const BuscarCategorias = async () => {
@@ -27,10 +28,18 @@ export default function Categorias() {
     }
   };useEffect(() => {BuscarCategorias();}, []);
 
+
+  useEffect(() => {
+    // Only fetch if categoriaSelecionada has a valid value
+    if (categoriaSelecionada) {
+      BuscarReceitasPorCategoria(categoriaSelecionada, setReceitas);
+    }
+  }, [categoriaSelecionada]);
+
   return (
      <div className={styles.categorias}>
         {categorias.map((categoria => (
-          <div className={styles.categoria}>
+          <div className={styles.categoria} onClick={() => setCategoriaSelecionada(categoria.id)} key={categoria.id}>
             <Image 
               src={categoria.imagem} 
               alt={categoria.nome}   

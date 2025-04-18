@@ -1,9 +1,11 @@
+import URLConfig from '../../Config/URLConfig'
+ 
  //Busca Todos os Posts(Receitas) Cadastrados
     export const BuscarReceitas = async (pagina,setReceitas,setTotalPaginas) => {
         try{
-            const response = await fetch(`http://localhost:8080/Receita?page=${pagina}`, {
+            const response = await fetch(`${URLConfig.BACKEND_URL}/Receita?page=${pagina}`, {
                 method : "GET",
-                headerds:{
+                headers:{
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 }
@@ -22,7 +24,7 @@
 
     export const BuscarReceitas2 = async (setReceitas) => {
         try{
-            const response = await fetch(`http://localhost:8080/Receita?page=${1}`, {
+            const response = await fetch(`${URLConfig.BACKEND_URL}/Receita?page=${1}`, {
                 method : "GET",
                 headerds:{
                     'Content-Type': 'application/json',

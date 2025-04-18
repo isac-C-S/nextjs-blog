@@ -26,34 +26,64 @@
 
   .redes{
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin-top: 30px;
-    padding: 0 100px;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 20px;
   }
 
-  .redes div {
-    width: 40px;
-    height: 40px;
+  .redeItem {
+    width: 45px;
+    height: 45px;
+    background-color: #f8f8f8;
+    border-radius: 50%;
     display: flex;
-    border: 0.001px solid #a9a9a9;
-    border-radius: 100%;
     align-items: center;
     justify-content: center;
-}
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
 
+  .redeItem:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  }
 
-.redes img {
-  width: 25px;
-  height: 25px;
-  border-radius: 100%;
-}
+  .redeItem:nth-child(1) {
+    border-color: #e8f4ff;
+  }
 
-.redes div:hover{
-  cursor: pointer;
-  background-color: pink;
-}
-  
+  .redeItem:nth-child(2) {
+    border-color: #ffecf6;
+  }
+
+  .redeItem:nth-child(3) {
+    border-color: #fff1e6;
+  }
+
+  .redeItem:nth-child(1):hover {
+    background-color: #e8f4ff;
+  }
+
+  .redeItem:nth-child(2):hover {
+    background-color: #ffecf6;
+  }
+
+  .redeItem:nth-child(3):hover {
+    background-color: #fff1e6;
+  }
+
+  .socialIcon {
+    width: 25px !important;
+    height: 25px !important;
+    opacity: 0.8;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .redeItem:hover .socialIcon {
+    opacity: 1;
+    transform: scale(1.1);
+  }
   
 @media (max-width: 1050px) {
   .redes{
@@ -63,6 +93,4 @@
     margin-top: 30px;
     padding: 0 30px;
   }
-
-
 }

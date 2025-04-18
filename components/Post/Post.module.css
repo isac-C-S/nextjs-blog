@@ -3,7 +3,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 50px 20px 0 20px;
+    margin: 50px auto;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: #fff;
+    max-width: 1000px;
+    overflow: hidden;
 }
 
 .titulo{
@@ -14,6 +19,24 @@
 
 .titulo h3{
     color: pink;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.titulo h1 {
+    font-size: 2.5rem;
+    margin: 15px 0;
+    color: #333;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.titulo p {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 10px;
 }
 
 .introducao{
@@ -21,17 +44,183 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 50px;
-    padding: 0px 0px 0px 20px;
+    margin-bottom: 30px;
+   
 }
 
 .introducao p{
     margin-bottom: 50px;
-    font-size: large;
+    font-size: 1.1rem;
+    text-align: justify;
+    line-height: 1.6;
+    color: #444;
 }
 
 .introducao img{
-    width: 95%;
+    width: 100%;
     height: 500px;
     border-radius: 5px;
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    height: auto;
+}
+
+.introducao img:hover {
+    transform: scale(1.05);
+}
+
+.ingredientes{
+    width: 100%;
+    margin-top: 40px;
+}
+
+.ingredientes h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    border-bottom: 2px solid pink;
+    padding-bottom: 5px;
+}
+
+.ingredientes_lista img{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+    transition: border-color 0.3s ease;
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.ingredientes_lista img:hover {
+    border-color: pink;
+}
+
+.ingredientes_lista{
+    margin-bottom: 10px;
+}
+
+.ingredientes_lista li{
+    display: flex;
+    align-items: center;
+    justify-content:left ;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #555;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fafafa;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0; /* Prevents items from shrinking */
+    min-width: 0; /* Ensure items shrink properly within grid */
+    max-width: 100%; /* Prevents items from exceeding container width */
+    box-sizing: border-box; /* Includes padding and border in width calculation */
+}
+
+.ingredientes_lista li:hover {
+    color: #000;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ingredientes_lista ul{
+    padding: 0;
+    width: 100%;
+    max-height: none; /* Remove height restriction */
+    display: grid; /* Use grid layout for better control */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Max 3 columns */
+    gap: 15px; /* Add spacing between items */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    white-space: normal; /* Allow text wrapping */
+    list-style: none;
+    max-width: 100%;
+}
+
+.preparo{
+    width: 100%;
+    margin-top: 50px;
+}
+
+.tempo{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.preparo h3{
+    margin: 20px 0 0 0;
+    padding: 0;
+    font-size: 1.7rem;
+    color: #444;
+    border-bottom: 2px solid pink;
+    padding-bottom: 5px;
+}
+
+.tempo p{
+    color: pink;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.preparoLista img{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+    transition: border-color 0.3s ease;
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.preparoLista img:hover {
+    border-color: pink;
+}
+
+.preparoLista li {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fafafa;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.preparoLista li span {
+    flex: 1;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #444;
+}
+
+.preparoLista li strong {
+    color: #333;
+    font-weight: bold;
+}
+
+.preparoLista li:hover {
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.preparoLista ul {
+    padding: 0;
+    width: 100%;
+    max-height: none; /* Remove height restriction */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 15px;
+    list-style: none;
+    max-width: 100%;
 }

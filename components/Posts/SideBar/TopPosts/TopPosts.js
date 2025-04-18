@@ -1,8 +1,36 @@
 import Image from "next/image";
 import styles from "./TopPosts.module.css";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import {getTopPosts} from "./Buscador"
 
 
 export default function TopPosts() {
+    const [topPosts, setTopPosts] = useState([]);
+    const router = useRouter();
+    
+    // Função para navegar para a página da receita
+    const IrReceita = (id) => {
+        return () => router.push({
+            pathname: '/Receita/page',
+            query: { id: id },
+        })
+    }
+    
+    // Buscar os posts mais populares quando o componente for montado
+    useEffect(() => {
+
+        async function fetchTopPosts() {
+            const posts = await getTopPosts();
+            if (posts) {
+                setTopPosts(posts);
+            }
+        }
+
+        fetchTopPosts();
+
+    }, []);
+
     return (
       
   
@@ -13,76 +41,44 @@ export default function TopPosts() {
 
             <div>
                 <ul className={styles.lista}>
-                    <li className={styles.posts}> 
-                        <div className={styles.img}>
-                            <Image src="/item1.jpg" alt="redes" width={72} height={72}/>
-                        </div>
+                    {topPosts.length > 0 ? (
+                        topPosts.map((post, index) => (
+                            <li 
+                                key={post.id} 
+                                className={styles.posts}
+                                onClick={IrReceita(post.id)}
+                            > 
+                                <div className={styles.img}>
+                                    <Image src={post.imagem || "/item1.jpg"} alt={post.titulo} width={72} height={72}/>
+                                </div>
 
-                        <div>
-                            <p>Bolo de Cenoura Delcioso</p>
-                        </div>
+                                <div>
+                                    <p>{post.titulo}</p>
+                                </div>
 
-                        <div className={styles.numero}>
-                            <h1>1</h1>
-                        </div>
-                    </li>
+                                <div className={styles.numero}>
+                                    <h1>{index + 1}</h1>
+                                </div>
+                            </li>
+                        ))
+                    ) : (
+                        // Placeholder items if no posts are loaded yet
+                        Array.from({ length: 5 }).map((_, index) => (
+                            <li key={`placeholder-${index}`} className={styles.posts}> 
+                                <div className={styles.img}>
+                                    <Image src="/item1.jpg" alt="placeholder" width={72} height={72}/>
+                                </div>
 
-                    <li className={styles.posts}> 
-                        <div className={styles.img}>
-                            <Image src="/item1.jpg" alt="redes" width={72} height={72}/>
-                        </div>
+                                <div>
+                                    <p>Carregando...</p>
+                                </div>
 
-                        <div>
-                            <p>Bolo de Cenoura Delcioso</p>
-                        </div>
-
-                        <div className={styles.numero}>
-                            <h1>2</h1>
-                        </div>
-                    </li>
-
-                    <li className={styles.posts}> 
-                        <div className={styles.img}>
-                            <Image src="/item1.jpg" alt="redes" width={72} height={72}/>
-                        </div>
-
-                        <div>
-                            <p>Bolo de Cenoura Delcioso</p>
-                        </div>
-
-                        <div className={styles.numero}>
-                            <h1>3</h1>
-                        </div>
-                    </li>
-
-                    <li className={styles.posts}> 
-                        <div className={styles.img}>
-                            <Image src="/item1.jpg" alt="redes" width={72} height={72}/>
-                        </div>
-
-                        <div>
-                            <p>Bolo de Cenoura Delcioso</p>
-                        </div>
-
-                        <div className={styles.numero}>
-                            <h1>4</h1>
-                        </div>
-                    </li>
-
-                    <li className={styles.posts}> 
-                        <div className={styles.img}>
-                            <Image src="/item1.jpg" alt="redes" width={72} height={72}/>
-                        </div>
-
-                        <div className={styles.texto}>
-                            <p>Bolo de Cenoura Delcioso</p>
-                        </div>
-
-                        <div className={styles.numero}>
-                            <h1>5</h1>
-                        </div>
-                    </li>
-                    
+                                <div className={styles.numero}>
+                                    <h1>{index + 1}</h1>
+                                </div>
+                            </li>
+                        ))
+                    )}
                 </ul>
             </div>
           </div>
@@ -90,4 +86,3 @@ export default function TopPosts() {
       
     );
   }
-  
