@@ -3,10 +3,23 @@
 /* removing default style of button */
 
 .form button {
-  border: none;
   background: none;
-  color: black;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff6b9d; /* Alterado para rosa médio */
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  transition: color 0.3s ease;
 }
+
+.form button:hover {
+  color: #e84d85; /* Alterado para rosa escuro */
+}
+
 /* styling of whole input container */
 .form {
   --timing: 0.3s;
@@ -26,7 +39,25 @@
   border-radius: var(--border-radius);
   transition: border-radius 0.5s ease;
   background: var(--input-bg,#fff);
+  border: 1px solid #ffcce0; /* Alterado para rosa claro */
+  box-shadow: 0 2px 5px rgba(255, 107, 157, 0.1); /* Sombra em tom rosa */
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 24px;
+  padding: 0 8px;
+  border: 1px solid #ffcce0; /* Alterado para rosa claro */
+  transition: all 0.3s ease;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(255, 107, 157, 0.1); /* Sombra em tom rosa */
 }
+
+.form:focus-within {
+  border-radius: var(--after-border-radius);
+  border-color: #ff6b9d; /* Alterado para rosa médio */
+  box-shadow: 0 4px 10px rgba(255, 107, 157, 0.2); /* Sombra em tom rosa */
+}
+
 /* styling of Input */
 .input {
   font-size: 0.9rem;
@@ -36,7 +67,27 @@
   padding-inline: 0.5em;
   padding-block: 0.7em;
   border: none;
+  flex-grow: 1;
+  height: 40px;
+  font-size: 14px;
+  padding: 0 12px;
+  outline: none;
+  color: #333;
+  flex-grow: 1;
+  border: none;
+  height: 40px;
+  font-size: 14px;
+  padding: 0 12px;
+  outline: none;
+  background-color: transparent;
+  color: #333;
+  min-width: 300px; /* Garante uma largura mínima para o input */
 }
+
+.input::placeholder {
+  color: #ffb3c8; /* Alterado para rosa claro */
+}
+
 /* styling of animated border */
 .form:before {
   content: "";
@@ -51,6 +102,7 @@
   border-radius: 1px;
   transition: transform var(--timing) ease;
 }
+
 /* Hover on Input */
 .form:focus-within {
   border-radius: var(--after-border-radius);
@@ -59,25 +111,79 @@
 .input:focus {
   outline: none;
 }
+
 /* here is code of animated border */
 .form:focus-within:before {
   transform: scale(1);
 }
+
 /* styling of close button */
 /* == you can click the close button to remove text == */
 .reset {
   border: none;
   background: none;
-  opacity: 0;
-  visibility: hidden;
+  opacity: 0.7; /* Aumentado ligeiramente a opacidade */
 }
+
+.reset:hover {
+  opacity: 1;
+}
+
 /* close button shown when typing */
 input:not(:placeholder-shown) ~ .reset {
   opacity: 1;
   visibility: visible;
 }
+
 /* sizing svg icons */
 .form svg {
   width: 17px;
   margin-top: 3px;
+}
+
+.h_6 {
+  width: 16px;
+  height: 16px;
+}
+
+.sugestoes {
+  position: absolute;
+  top: calc(100% + 2px); /* Reduzido de 10px para 2px */
+  left: 0;
+  right: 0;
+  background-color: #fff0f5; /* Fundo rosa bem claro */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(255, 107, 157, 0.15);
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 100;
+  padding: 8px 0;
+  list-style: none;
+  border: 1px solid #ffcce0; /* Borda rosa claro */
+  width: 100%;
+  margin-top: 0; /* Removido o margin-top adicional */
+}
+
+.sugestao_item {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+  color: #333;
+}
+
+.sugestao_item:hover {
+  background-color: #ffcce0; /* Fundo rosa claro no hover */
+  color: #e84d85; /* Texto rosa escuro no hover */
+}
+
+.sugestao_item:not(:last-child) {
+  border-bottom: 1px solid #ffecf2; /* Borda mais clara entre itens */
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 500px; /* Aumentado de qualquer valor anterior para 500px */
+  margin: 0 auto; /* Centraliza o container se necessário */
 }

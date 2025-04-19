@@ -72,10 +72,8 @@
    font-weight: bolder;
    color: #000;
    margin-bottom: 10px;
-   width: calc(100% - 90px); /* Increased space to account for the number */
    overflow: visible; /* Allow text to be fully visible */
    display: -webkit-box;
-   -webkit-line-clamp: 2; /* Limit to 2 lines of text */
    -webkit-box-orient: vertical;
    line-height: 1.3;
 }

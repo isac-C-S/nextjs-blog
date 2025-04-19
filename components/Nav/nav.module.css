@@ -60,7 +60,9 @@
 
   .pesquisa{
     align-items: center;
-    display: flex
+    display: flex;
+    width: 500px; /* Aumentado para largura fixa de 500px */
+    max-width: 100%; /* Garante responsividade */
   }
 
   @media (max-width: 1025px) {

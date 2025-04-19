@@ -1,56 +1,54 @@
 import Image from "next/image";
 import styles from "./categorias.module.css";
 import { useState, useEffect } from "react";
-import {BuscarReceitasPorCategoria} from "./Buscador";
+import {BuscarReceitasPorCategoria,BuscarCategorias} from "./Buscador";
+import {BuscarReceitas} from "../Posts/Buscador";
 
+export default function Categorias({setReceitas, categorias, setCategorias, setTotalPaginas, setPagina, pagina, setCategoriaSelecionada}) {
+  const [categoriaAtual, setCategoriaAtual] = useState("");
 
-export default function Categorias({setReceitas}) {
-  const [categorias, setCategorias] = useState([]);
-  const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
+ useEffect(() => {BuscarCategorias(setCategorias);}, []);
 
-  //Busca Todas as Categorias Cadastradas
-  const BuscarCategorias = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/Categoria", {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-     setCategorias(data);
-    } catch (error) {
-      console.error("Erro ao buscar categorias:", error);
+  // aciona a busca de receita de acordo com a categoria clicada. se clicar em uma categoria já selecionada, ele limpa a categoria e busca todas as receitas novamente.
+  const handleCategoriaClick = (id) => {
+    if (categoriaAtual === id) {
+      setCategoriaAtual("");
+      setCategoriaSelecionada(null);
+      setPagina(0);
+    
+      BuscarReceitas(0, setReceitas, setTotalPaginas);
+    } else {
+      setCategoriaAtual(id);
+      setCategoriaSelecionada(id);
+      setPagina(0);
+      BuscarReceitasPorCategoria(id, setReceitas, setTotalPaginas, 0);
     }
-  };useEffect(() => {BuscarCategorias();}, []);
+  };
 
-
+  // Aciona a Busca de Acordo com a paginação e a categoria selecionada
   useEffect(() => {
-    // Only fetch if categoriaSelecionada has a valid value
-    if (categoriaSelecionada) {
-      BuscarReceitasPorCategoria(categoriaSelecionada, setReceitas);
+    if (categoriaAtual) {
+      BuscarReceitasPorCategoria(categoriaAtual, setReceitas, setTotalPaginas, pagina);
     }
-  }, [categoriaSelecionada]);
+  }, [pagina, categoriaAtual, setTotalPaginas, setReceitas]);
 
   return (
      <div className={styles.categorias}>
         {categorias.map((categoria => (
-          <div className={styles.categoria} onClick={() => setCategoriaSelecionada(categoria.id)} key={categoria.id}>
+          <div 
+            className={`${styles.categoria} ${categoriaAtual === categoria.id ? styles.categoriaAtiva : ''}`} 
+            onClick={() => handleCategoriaClick(categoria.id)} 
+            key={categoria.id}
+          >
             <Image 
               src={categoria.imagem} 
               alt={categoria.nome}   
               width={500}                 
               height={300}              
             />
-            <p>{categoria.nome}</p>
+            <p style={{fontSize:"medium"}}>{categoria.nome}</p>
           </div>
         )))}
      </div>
-       
-    
   );
 }

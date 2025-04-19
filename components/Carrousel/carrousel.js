@@ -4,7 +4,7 @@ import {BuscarReceitas2} from "../../components/Posts/Buscador";
 import { useEffect , useState} from "react";
 import { useRouter } from 'next/router';
 
-export default function Carrousel() {
+export default function Carrousel({categorias}) {
   const [receitas,setReceitas] = useState([]);
   const router = useRouter();
 
@@ -16,6 +16,39 @@ export default function Carrousel() {
     });
   };
 
+  // Função para obter o nome da categoria a partir do ID
+  const obterNomeCategoria = (categoriaId) => {
+    const categoria = categorias.find(cat => cat.id === categoriaId);
+    // Retorna o nome da categoria ou "Sobremesa" como fallback
+    return categoria ? categoria.nome : "Sobremesa";
+  };
+
+  // Função para formatar a data em um formato mais amigável
+  const formatarData = (dataString) => {
+    if (!dataString) return "28 de Dezembro de 2024";
+    
+    try {
+      const data = new Date(dataString);
+      
+      if (isNaN(data.getTime())) return dataString; // Se não for uma data válida, retorna o original
+      
+      const meses = [
+        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+      ];
+      
+      const dia = data.getDate();
+      const mes = meses[data.getMonth()];
+      const ano = data.getFullYear();
+      
+      return `${dia} de ${mes} de ${ano}`;
+    } catch (error) {
+      console.error("Erro ao formatar data:", error);
+      return dataString;
+    }
+  };
+
+  // Configurações do Carrousel
   const settings = {
     dots: true,
     infinite: false,
@@ -52,6 +85,7 @@ export default function Carrousel() {
     ],
   };
 
+  // Busca as receitas ao carregar o componente
   useEffect(() => {
     BuscarReceitas2(setReceitas);
   }, []);
@@ -74,7 +108,7 @@ export default function Carrousel() {
               <div className={styles.borda}/>
               <div className={styles.titulo}>
                 <div className={styles.tituloP}>
-                  <h1>{receita.categoria || "Sobremesa"}</h1>
+                  <h1>{obterNomeCategoria(receita.categoria)}</h1>
                 </div>
 
                 <div className={styles.tituloS}>
@@ -82,7 +116,7 @@ export default function Carrousel() {
                 </div>
 
                 <div className={styles.data}>
-                  <p>—— {receita.data || "28/12/2024"} ——</p>
+                  <p>—— {formatarData(receita.dataPostagem)} ——</p>
                 </div>
               </div>
             </div>
@@ -105,7 +139,7 @@ export default function Carrousel() {
                   <h3>Bolo de cenoura</h3>
                 </div>
                 <div className={styles.data}>
-                  <p>—— 28/12/2024 ——</p>
+                  <p>—— 28 de Dezembro de 2024 ——</p>
                 </div>
               </div>
             </div>

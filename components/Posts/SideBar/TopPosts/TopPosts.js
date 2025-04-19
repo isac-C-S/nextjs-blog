@@ -9,26 +9,29 @@ export default function TopPosts() {
     const [topPosts, setTopPosts] = useState([]);
     const router = useRouter();
     
+    // Função para limitar caracteres
+    const limitarTexto = (texto, limite = 50) => {
+        if (texto.length <= limite) return texto;
+        return texto.substring(0, limite) + '...';
+    };
+    
     // Função para navegar para a página da receita
     const IrReceita = (id) => {
         return () => router.push({
             pathname: '/Receita/page',
             query: { id: id },
         })
-    }
+    };
     
     // Buscar os posts mais populares quando o componente for montado
     useEffect(() => {
-
         async function fetchTopPosts() {
             const posts = await getTopPosts();
             if (posts) {
                 setTopPosts(posts);
             }
         }
-
         fetchTopPosts();
-
     }, []);
 
     return (
@@ -52,8 +55,8 @@ export default function TopPosts() {
                                     <Image src={post.imagem || "/item1.jpg"} alt={post.titulo} width={72} height={72}/>
                                 </div>
 
-                                <div>
-                                    <p>{post.titulo}</p>
+                                <div >
+                                    <p title={post.titulo}>{limitarTexto(post.titulo)}</p>
                                 </div>
 
                                 <div className={styles.numero}>
@@ -69,7 +72,7 @@ export default function TopPosts() {
                                     <Image src="/item1.jpg" alt="placeholder" width={72} height={72}/>
                                 </div>
 
-                                <div>
+                                <div   >
                                     <p>Carregando...</p>
                                 </div>
 
