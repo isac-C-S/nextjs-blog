@@ -11,9 +11,8 @@ export default function Receita() {
     
     <div>
         <Nav/>
-        <Receitas/>
-         <Footer/>
-        
+        <Receitas id={id} />
+        <Footer/>
     </div>
        
     
