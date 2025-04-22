@@ -1,7 +1,13 @@
 .container{
     width: 100%;
-    height: 340px;
+    height: auto;
+    min-height: 340px;
     font-family: "Playfair Display", serif;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0; /* Removido o padding lateral */
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .container img{
@@ -20,6 +26,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 360px;
     font-size: 20px;
     color: white;
@@ -161,5 +168,31 @@
   }
   .titulo{
     right: -7%;
+    width: 320px;
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+      max-width: 100%;
+      width: 100%;
+      height: 340px;
+      padding: 0;
+  }
+  
+  .containerItem {
+      width: 380px; /* Ajustado para bater com a borda */
+      height: 340px;
+  }
+  
+  .containerItem .borda {
+      width: 380px; /* Igual ao containerItem */
+      height: 320px;
+  }
+  
+  .titulo {
+      width: 380px; /* Igual ao containerItem */
+      font-size: 20px;
   }
 }

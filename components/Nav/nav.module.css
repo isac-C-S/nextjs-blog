@@ -8,11 +8,12 @@
     display: flex;
     flex-direction: row;
     font-family: "Playfair Display", serif;
-   
     font-style: normal;
-  }
-  
-  .container:before {
+    justify-content: center;
+    align-items: center;
+}
+
+.container:before {
     content: '';  /* Criando uma borda adicional */
     position: absolute;
     top: -5px;  /* Posicionando a borda acima da container */
@@ -21,29 +22,39 @@
     border: 3px solid white;  /* Borda adicional branca */
     border-radius: 15px;  /* Borda arredondada com mais profundidade */
     z-index: -1;  /* Colocando a borda abaixo da container */
-  }
+}
 
-  .container_logo{
+.innerContainer {
+    display: flex;
+    width: 100%;
+    max-width: 1440px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.container_logo{
     width: 200px;
     height: 90px;
     margin: 0;
     margin-left: 50px;
-  }
+}
 
-  .container_logo img{
+.container_logo img{
     height: 90px;
     width: 200px;
-  }
+}
 
-  .container_ul{
+.container_ul{
     width: 50%;
     margin-left: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+}
 
-  .container_ul ul{
+.container_ul ul{
     display: flex;
     flex-direction: row;
     list-style: none; 
@@ -51,28 +62,47 @@
     justify-content: space-evenly;
     font-weight: bold;
   
-  }
-  
-  .container_ul p:hover{
+}
+
+.container_ul p:hover{
     color: pink;
     cursor: pointer;
-  }
+}
 
-  .pesquisa{
+.pesquisa{
     align-items: center;
     display: flex;
     width: 500px; /* Aumentado para largura fixa de 500px */
     max-width: 100%; /* Garante responsividade */
-  }
+}
 
-  @media (max-width: 1025px) {
+@media (min-width: 1441px) {
+    .innerContainer {
+        max-width: 1600px;
+        padding: 0 30px;
+    }
+    
     .container_ul {
-      margin-left: 0px;
-  }
+        width: 45%;
+        margin-left: 150px;
+    }
+    
+    .container_ul ul {
+        font-size: 1.1rem;
+    }
+    
+    .pesquisa {
+        width: 550px;
+    }
+}
 
-  }
+@media (max-width: 1025px) {
+    .container_ul {
+        margin-left: 0px;
+    }
+}
 
-  @media (max-width: 770px) {
+@media (max-width: 770px) {
     .container_ul {
      display: none;
   }
@@ -81,10 +111,9 @@
     justify-content: space-evenly;
   }
 
-  }
+}
 
-
-  @media (max-width: 430px) {
+@media (max-width: 430px) {
     .pesquisa{
       display: none;
     }
@@ -92,4 +121,4 @@
     .container_logo{
       margin: 0;
     }
-  }
+}

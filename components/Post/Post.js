@@ -1,5 +1,5 @@
 import styles from './Post.module.css';
-import {BuscarReceitaPorId,BuscarCategoriaDaReceita,BuscarIngredientesDareceita,BuscarModoPreparoDaReceita} from './Buscador.js'
+import {CadastrarComentarioNaReceita,BuscarReceitaPorId,BuscarCategoriaDaReceita,BuscarIngredientesDareceita,BuscarModoPreparoDaReceita,BuscarComentariosDaReceita,BuscarCobertura} from './Buscador.js'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -11,6 +11,12 @@ export default function Post({id}) {
     const [cobertura, setCobertura] = useState([]);
     const [modoPreparo, setModoPreparo] = useState([]);
     const [postsRelacionados, setPostsRelacionados] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState('');
+    const [userName, setUserName] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [comentario,setComentarios] = useState([]);
+    const [commentLimit, setCommentLimit] = useState(3);
     const steps = [
         "Antes de tudo, em uma tigela, junte a farinha de trigo, o açúcar, o chocolate em pó e o fermento químico. Misture bem para combinar todos os ingredientes secos, garantindo que o fermento esteja bem distribuído.",
         "Em seguida, em outra tigela, bata os ovos e adicione o leite. Depois, incorpore essa mistura aos ingredientes secos, mexendo bem até obter uma massa homogênea e sem grumos.",
@@ -37,6 +43,8 @@ export default function Post({id}) {
         if(Receita && !isNaN(intId)){
             BuscarIngredientesDareceita(intId, setIngredientes);
             BuscarModoPreparoDaReceita(intId, setModoPreparo);
+            BuscarComentariosDaReceita(intId, setComentarios);
+            BuscarCobertura(intId, setCobertura);
         }
     }, [Receita]);
 
@@ -67,12 +75,51 @@ export default function Post({id}) {
         setPostsRelacionados(exampleRelatedPosts);
     }, []);
 
+    // Exemplo de comentários
+    useEffect(() => {
+        // Dados de exemplo para comentários
+        const exampleComments = [
+            {
+                id: 1,
+                name: "Maria Silva",
+                date: "2023-11-15",
+                comment: "Adorei essa receita! Fiz para minha família no final de semana e todos amaram. Vou fazer novamente com certeza!"
+            },
+            {
+                id: 2,
+                name: "João Santos",
+                date: "2023-11-10",
+                comment: "Muito fácil de fazer e ficou delicioso. Só adicionei um pouco mais de açúcar porque gosto de doces mais adocicados."
+            }
+        ];
+        
+        setComments(exampleComments);
+    }, []);
+
     // Deixa a Data em um formato mais amigavel para o usuario
     const formatDate = (dateString) => {
         if (!dateString) return "—— Data não disponível ——";
+        
+        // Create date object from the dateString
         const date = new Date(dateString);
-        const options = { year: 'numeric', month: 'short', day: '2-digit' };
-        return `—— ${date.toLocaleDateString('en-US', options)} ——`;
+        
+        // Adjust for timezone difference (subtract 3 hours)
+        const adjustedDate = new Date(date.getTime() - (3 * 60 * 60 * 1000));
+        
+        // Format for the title (only date)
+        if (dateString === Receita.dataPostagem) {
+            const options = { year: 'numeric', month: 'short', day: '2-digit' };
+            return `—— ${adjustedDate.toLocaleDateString('pt-BR', options)} ——`;
+        }
+        
+        // Format for comments (date and time)
+        const dateOptions = { year: 'numeric', month: 'short', day: '2-digit' };
+        const timeOptions = { hour: '2-digit', minute: '2-digit' };
+        
+        const formattedDate = adjustedDate.toLocaleDateString('pt-BR', dateOptions);
+        const formattedTime = adjustedDate.toLocaleTimeString('pt-BR', timeOptions);
+        
+        return `${formattedDate} às ${formattedTime}`;
     };
 
     // Converte minutos para formato de hora e minutos
@@ -87,6 +134,35 @@ export default function Post({id}) {
         } else {
             return `${mins}min`;
         }
+    };
+
+    // Função para adicionar um novo comentário
+    const handleSubmitComment = (e) => {
+        e.preventDefault();
+        
+        if (!newComment.trim() || !userName.trim()) return;
+        
+        const newCommentObj = {
+            id: comments.length + 1,
+            name: userName,
+            date: new Date().toISOString().split('T')[0],
+            comment: newComment
+        };
+        
+        setComments([...comments, newCommentObj]);
+        setNewComment('');
+        setUserName('');
+        setUserEmail('');
+    };
+
+    // Function to show more comments
+    const showMoreComments = () => {
+        setCommentLimit(prev => prev + 5); // Show 5 more comments
+    };
+
+    // Show all comments
+    const showAllComments = () => {
+        setCommentLimit(comentario.length);
     };
 
     return (
@@ -130,23 +206,30 @@ export default function Post({id}) {
                 </div>
             </div>
 
-            <div className={styles.ingredientes}>
-                <h3>Cobertura:</h3>
-                <div className={styles.ingredientes_lista}>
-                    <ul>
-                        <li><img src={Receita.imagem || "/carne.jpeg"}></img> 1 xícara de açúcar</li>
-                        <li><img src={Receita.imagem || "/carne.jpeg"}></img>1 xícara de farinha de trigo</li>
-                        <li><img src={Receita.imagem || "/carne.jpeg"}></img>/2 xícara de chocolate em pó</li>
-                        <li><img src={Receita.imagem || "/carne.jpeg"}></img>1/2 xícara de óleo</li>
-                        <li><img src={Receita.imagem || "/carne.jpeg"}></img>1/2 xícara de água</li>
-                        <li><img src={Receita.imagem || "/carne.jpeg"}></img>3 ovos</li>
-                        <li><img src={Receita.imagem || "/carne.jpeg"}></img>1 colher de fermento em pó</li>
-                        <li><img src={Receita.imagem || "/carne.jpeg"}></img>1 colher de fermento em pó</li>
-                        <li><img src={Receita.imagem || "/carne.jpeg"}></img>1 colher de fermento em pó</li>
-                        <li><img src={Receita.imagem || "/carne.jpeg"}></img>1 colher de fermento em pó</li>
-                    </ul>
+            {/* Only show Cobertura section if there are items */}
+            {cobertura && cobertura.length > 0 && (
+                <div className={styles.ingredientes}>
+                    {cobertura.map((coberturaItem, index) => (
+                        <div key={index}>
+                            <h3>{coberturaItem.nome || "Cobertura"}:</h3>
+                            {coberturaItem.descricao && <p className={styles.coberturaDescricao}>{coberturaItem.descricao}</p>}
+                            <div className={styles.ingredientes_lista}>
+                                <ul>
+                                    {coberturaItem.ingredientes && coberturaItem.ingredientes.length > 0 ? (
+                                        coberturaItem.ingredientes.map((ingrediente, idx) => (
+                                            <li key={idx}>
+                                                {ingrediente.quantidade ? `${ingrediente.quantidade} ` : ""}{ingrediente.nome}
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <li>Sem ingredientes específicos para esta cobertura</li>
+                                    )}
+                                </ul>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-            </div>
+            )}
 
             <div className={styles.preparo}>
                 <h3>Modo de Preparo:</h3>
@@ -180,7 +263,9 @@ export default function Post({id}) {
             </div>
 
             <div className={styles.postsRelacionados}>
-                <h3>Posts Relacionados:</h3>
+                <div className={styles.relacionados}>
+                    <h2>Posts Relacionados</h2>
+                </div>
                 <div className={styles.postsGrid}>
                     {postsRelacionados && postsRelacionados.length > 0 ? (
                         postsRelacionados.map((post) => (
@@ -199,6 +284,112 @@ export default function Post({id}) {
                     ) : (
                         <p>Nenhum post relacionado encontrado.</p>
                     )}
+                </div>
+            </div>
+
+            <div className={styles.commentsSection}>
+                <div className={styles.relacionados}>
+                    <h2>Comentários</h2>
+                </div>
+                
+                <div className={styles.commentsList}>
+                    {comentario && comentario.length > 0 ? (
+                        <>
+                            {[...comentario]
+                                .sort((a, b) => {
+                                    // Sort by date in descending order (newest first)
+                                    const dateA = a.data ? new Date(a.data) : new Date(0);
+                                    const dateB = b.data ? new Date(b.data) : new Date(0);
+                                    return dateB - dateA;
+                                })
+                                .slice(0, commentLimit)
+                                .map(comment => (
+                                    <div key={comment.id} className={styles.commentItem}>
+                                        <div className={styles.commentHeader}>
+                                            <h4>{comment.nome || 'Anônimo'}</h4>
+                                            <span>{comment.data ? formatDate(comment.data) : '—— Data não disponível ——'}</span>
+                                        </div>
+                                        <p>{comment.comentario}</p>
+                                    </div>
+                                ))}
+                            
+                            {comentario.length > commentLimit && (
+                                <div className={styles.commentActions}>
+                                    <button 
+                                        className={styles.showMoreButton} 
+                                        onClick={showMoreComments}
+                                    >
+                                        Mostrar mais comentários
+                                    </button>
+                                    <button 
+                                        className={styles.showAllButton} 
+                                        onClick={showAllComments}
+                                    >
+                                        Mostrar todos ({comentario.length})
+                                    </button>
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <p className={styles.noComments}>Ainda não há comentários. Seja o primeiro a comentar!</p>
+                    )}
+                </div>
+                
+                <div className={styles.commentForm}>
+                    <h3>Deixe seu comentário</h3>
+                    <form onSubmit={handleSubmitComment}>
+                        <div className={styles.formGroup}>
+                            <input 
+                                type="text" 
+                                placeholder="Seu nome *" 
+                                value={userName}
+                                onChange={(e) => setUserName(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className={styles.formGroup}>
+                            <input 
+                                type="email" 
+                                placeholder="Seu email" 
+                                value={userEmail}
+                                onChange={(e) => setUserEmail(e.target.value)}
+                            />
+                        </div>
+                        <div className={styles.formGroup}>
+                            <textarea 
+                                placeholder="Seu comentário *" 
+                                rows="4"
+                                value={newComment}
+                                onChange={(e) => setNewComment(e.target.value)}
+                                required
+                            ></textarea>
+                        </div>
+                        <button 
+                            type="button" 
+                            className={styles.submitButton} 
+                            disabled={!newComment.trim() || !userName.trim()}
+                            onClick={() => {
+                                if (newComment.trim() && userName.trim()) {
+                                    CadastrarComentarioNaReceita({
+                                        newComment: newComment, 
+                                        idReceita: parseInt(id),
+                                        userName: userName,
+                                        userEmail: userEmail
+                                    });
+                                    // Clear the form after submission
+                                    setNewComment('');
+                                    setUserName('');
+                                    setUserEmail('');
+                                    // Refresh comments after submission
+                                    setTimeout(() => {
+                                        BuscarComentariosDaReceita(parseInt(id), setComentarios);
+                                    }, 1000);
+                                }
+                            }}
+                        >
+                            Enviar Comentário
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

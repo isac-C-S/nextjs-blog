@@ -90,3 +90,80 @@ export const BuscarModoPreparoDaReceita = async (id, setModoPreparo) => {
     }
 
 };
+
+export const BuscarComentariosDaReceita = async (id, setComentarios) => {
+    try {
+        const response = await fetch(`${URLConfig.BACKEND_URL}/Comentario/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao buscar os comentários da receita');
+        }
+
+        const data = await response.json();
+        setComentarios(data);
+    } catch (error) {
+        console.error('Erro:', error);
+        throw error;
+    }
+
+};
+
+export const CadastrarComentarioNaReceita = async ({ newComment, idReceita, userName, userEmail }) => {
+    try {
+        // Create current date in ISO format
+        const currentDate = new Date().toISOString();
+        
+        const comentarioData = {
+            comentario: newComment,
+            idReceita: idReceita,
+            data: currentDate,
+            nome: userName ,
+            email: userEmail
+        };
+        
+        const response = await fetch(`${URLConfig.BACKEND_URL}/Comentario`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(comentarioData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao cadastrar o comentário na receita');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Erro:', error);
+        throw error;
+    }
+};
+
+export const BuscarCobertura = async (id, setIngredienteCobertura) => {
+    try {
+        const response = await fetch(`${URLConfig.BACKEND_URL}/Cobertura/receita/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao buscar os ingredientes da cobertura da receita');
+        }
+
+        const data = await response.json();
+        setIngredienteCobertura(data);
+    } catch (error) {
+        console.error('Erro:', error);
+        throw error;
+    }
+
+};

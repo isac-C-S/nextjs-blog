@@ -1,5 +1,7 @@
 .TopPosts{
     margin-top: 50px;
+    width: 100%;
+    max-width: 100%;
 }
 
 .titulo {
@@ -39,6 +41,8 @@
     height: 80px;
     position: relative; /* Added to help with absolute positioning */
     padding-right: 50px; /* Add space for the number */
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .posts:hover{
@@ -94,12 +98,63 @@
     transition: opacity 0.3s ease-in-out;
 }
 
+@media (min-width: 1441px) {
+    .posts p {
+        font-size: 1.05rem;
+        line-height: 1.4;
+    }
+    
+    .img {
+        width: 80px;
+        height: 80px;
+        min-width: 80px;
+    }
+    
+    .numero {
+        font-size: 35px;
+        right: 20px;
+    }
+}
 
-  
 @media (max-width: 1050px) {
-  .numero {
-    margin-left: 0;
-   
-  }
+    .numero {
+        margin-left: 0;
+    }
+}
 
+@media (max-width: 768px) {
+    .posts {
+        height: 70px;
+        padding-right: 40px;
+    }
+    
+    .img {
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        margin-right: 15px;
+    }
+    
+    .posts p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .posts {
+        height: 65px;
+        padding-right: 35px;
+    }
+    
+    .img {
+        width: 55px;
+        height: 55px;
+        min-width: 55px;
+        margin-right: 10px;
+    }
+    
+    .numero {
+        font-size: 25px;
+        right: 10px;
+    }
 }

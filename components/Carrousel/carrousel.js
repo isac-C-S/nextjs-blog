@@ -59,6 +59,20 @@ export default function Carrousel({categorias}) {
     arrows: false,
     responsive: [
       {
+        breakpoint: 9999, // For very large screens
+        settings: {
+          slidesToShow: 7, // Show more items on large screens to fill width
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 1440, // Standard desktop down to 1440px
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        }
+      },
+      {
         breakpoint: 1030, // Tela média (tablets grandes)
         settings: {
           slidesToShow: 3,

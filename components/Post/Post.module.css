@@ -8,6 +8,230 @@
     background-color: #fff;
     max-width: 1000px;
     overflow: hidden;
+    margin: 0 auto; /* Center the post */
+    box-sizing: border-box;
+}
+
+/* Container max-width constraint */
+@media (min-width: 1440px) {
+    .post {
+        max-width: 1200px; /* Slightly larger on very big screens */
+        width: 65%;
+        padding: 0 50px 40px 50px;
+    }
+    
+    .titulo h1 {
+        font-size: 2.8rem;
+        line-height: 1.3;
+        max-width: 90%; /* Contain very long titles on large screens */
+        margin: 20px auto; /* Center with more spacing */
+    }
+    
+    .ingredientes_lista ul {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+    
+    .commentForm {
+        padding: 35px;
+        max-width: 90%;
+        margin: 0 auto;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .post {
+        width: 80%;
+    }
+}
+
+@media (max-width: 992px) {
+    .post {
+        width: 90%;
+        padding: 0 20px 20px 20px;
+    }
+    
+    .titulo h1 {
+        font-size: 2.2rem;
+        line-height: 1.35;
+    }
+    
+    .introducao p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .post {
+        width: 95%;
+        padding: 0 15px 15px 15px;
+        border-radius: 8px;
+    }
+    
+    .titulo h1 {
+        font-size: 1.8rem;
+        line-height: 1.3;
+        padding: 0 10px; /* Add some padding on smaller screens */
+    }
+    
+    .titulo h3 {
+        font-size: 1rem;
+    }
+    
+    .introducao p {
+        margin-bottom: 30px;
+    }
+    
+    .ingredientes h3, .preparo h3 {
+        font-size: 1.3rem;
+    }
+    
+    .ingredientes_lista ul {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    .postsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .commentHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .commentForm {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .post {
+        width: 100%;
+        border-radius: 0;
+    }
+    
+    .titulo h1 {
+        font-size: 1.5rem;
+        line-height: 1.25;
+    }
+    
+    .ingredientes_lista ul {
+        grid-template-columns: 1fr;
+    }
+    
+    .commentItem {
+        padding: 15px;
+    }
+    
+    .commentHeader h4 {
+        font-size: 1rem;
+    }
+    
+    .commentItem p {
+        font-size: 0.95rem;
+    }
+    
+    .commentActions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .showMoreButton, .showAllButton {
+        width: 100%;
+    }
+    
+    .formGroup input, 
+    .formGroup textarea {
+        padding: 12px;
+    }
+    
+    .submitButton {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .tempo {
+        padding: 0 5px;
+    }
+    
+    .tempo h4, .tempo p {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .postsGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .titulo h1 {
+        font-size: 1.3rem;
+        line-height: 1.2;
+        padding: 0 5px; /* Smaller padding on the smallest screens */
+    }
+    
+    .tempo {
+        align-items: center;
+        justify-content: flex-start;
+       
+    }
+    
+    .tempo p {
+        margin-left: 8px; /* Reduced margin but keep it on the same line */
+      
+        font-size: 0.95rem;
+        justify-content: center;
+    }
+    
+    .preparoLista li {
+        padding: 15px;
+    }
+    
+    .preparoLista li span {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .post {
+        padding: 0 10px 10px 10px;
+    }
+    
+    .titulo h1 {
+        font-size: 1.2rem;
+        line-height: 1.2;
+    }
+    
+    .titulo h3 {
+        font-size: 0.9rem;
+    }
+    
+    .introducao p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    .preparoLista li span {
+        font-size: 0.9rem;
+    }
+    
+    .submitButton {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    
+    .tempo h4, .tempo p {
+        font-size: 0.9rem; /* Slightly smaller font on very small screens */
+    }
+    
+    .tempo h4 {
+        padding-right: 5px;
+    }
+    
+    .tempo p {
+        margin-left: 5px;
+    }
 }
 
 .titulo{
@@ -25,11 +249,16 @@
 }
 
 .titulo h1 {
-    font-size: 2.5rem;
+    font-size: clamp(1.2rem, 1rem + 2vw, 2.5rem); /* Fluid typography from 1.2rem to 2.5rem */
     margin: 15px 0;
     color: #333;
     text-align: center;
     line-height: 1.4;
+    word-wrap: break-word; /* Ensures words wrap properly */
+    overflow-wrap: break-word; /* Modern version of word-wrap */
+    hyphens: auto; /* Adds hyphens when needed */
+    max-width: 100%; /* Ensures content doesn't overflow */
+    box-sizing: border-box; /* Ensures padding doesn't add to width */
 }
 
 .titulo p {
@@ -143,6 +372,23 @@
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    flex-wrap: nowrap; /* Ensure items don't wrap to next line */
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.tempo h4 {
+    margin: 0;
+    padding-right: 8px;
+    white-space: nowrap; /* Prevent breaking across lines */
+}
+
+.tempo p{
+    color: pink;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    white-space: nowrap; /* Prevent breaking across lines */
 }
 
 .preparo h3{
@@ -152,13 +398,6 @@
     color: #444;
     border-bottom: 2px solid pink;
     padding-bottom: 5px;
-}
-
-.tempo p{
-    color: pink;
-    margin-left: 10px;
-    font-weight: bold;
-    font-size: 1.1rem;
 }
 
 .preparoLista img{
@@ -241,53 +480,92 @@
 .postsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
+  gap: 20px;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .relatedPostCard {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
   overflow: hidden;
-  cursor: pointer;
-  background: none;
-  border: none;
-  box-shadow: none;
-  transition: opacity 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+  background-color: white;
+  border: 1px solid #f0f0f0;
+  height: 100%;
 }
 
 .relatedPostCard:hover {
-  opacity: 0.85;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  border-color: #e0e0e0;
 }
 
 .relatedPostImage {
   width: 100%;
-  height: 200px;
+  height: 180px;
   object-fit: cover;
-  margin-bottom: 10px;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.relatedPostCard:hover .relatedPostImage {
+  filter: brightness(1.05);
 }
 
 .relatedPostCard h4 {
-  font-size: 1rem;
-  margin: 8px 0 4px 0;
-  color: #444;
-  font-weight: normal;
+  font-size: 1.05rem;
+  padding: 15px 15px 6px;
+  margin: 0;
+  color: #333;
+  font-weight: 600;
   line-height: 1.4;
 }
 
 .relatedPostCard p {
-  color: #888;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  padding: 0 15px 15px;
   margin: 0;
-  text-transform: none;
-  letter-spacing: normal;
-  font-weight: normal;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
+
+.relatedPostCard:hover h4 {
+  color: #000;
+}
+
+.relatedPostCard:hover p {
+  color: pink;
+}
+
+.relacionados {
+    position: relative;
+    display: inline-block;
+    border: 2px solid pink;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+  }
+  
+  .relacionados::after {
+    content: ""; /* Cria o triângulo */
+    position: absolute;
+    bottom: -10px; /* Posiciona o triângulo abaixo do elemento */
+    left: 50%; /* Centraliza o triângulo horizontalmente */
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent; /* Lado esquerdo transparente */
+    border-right: 10px solid transparent; /* Lado direito transparente */
+    border-top: 10px solid pink; /* Cor do triângulo */
+  }
 
 @media (max-width: 768px) {
   .postsGrid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .relatedPostImage {
-    height: 160px;
   }
 }
 
@@ -295,4 +573,194 @@
   .postsGrid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Comments Section */
+.commentsSection {
+  width: 100%;
+  margin-top: 60px;
+  margin-bottom: 40px;
+}
+
+.commentsList {
+  margin: 30px 0 40px;
+}
+
+.commentItem {
+  padding: 22px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-color: #fafafa;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+}
+
+.commentItem:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  border-color: #e0e0e0;
+}
+
+.commentItem::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: pink;
+  border-radius: 10px 0 0 10px;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+.commentHeader h4 {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+}
+
+.commentHeader span {
+  font-size: 0.85rem;
+  color: #999;
+  font-style: italic;
+}
+
+.commentItem p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.noComments {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 30px 20px;
+  border: 1px dashed #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.commentForm {
+  background-color: #f9f9f9;
+  padding: 28px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.commentForm h3 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 1.3rem;
+  color: #333;
+  border-bottom: 2px solid pink;
+  padding-bottom: 8px;
+  display: inline-block;
+  position: relative;
+}
+
+.formGroup {
+  margin-bottom: 18px;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: pink;
+  box-shadow: 0 0 0 3px rgba(255, 192, 203, 0.15);
+}
+
+.submitButton {
+  background-color: pink;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.submitButton:hover {
+  background-color: #ff8da8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 105, 180, 0.2);
+}
+
+.submitButton:active {
+  transform: translateY(0);
+}
+
+.submitButton:disabled {
+  background-color: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.submitButton:disabled:hover {
+  background-color: #f0f0f0;
+  transform: none;
+  box-shadow: none;
+}
+
+.commentActions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.showMoreButton, .showAllButton {
+  background-color: white;
+  color: #666;
+  border: 1px solid #ddd;
+  padding: 10px 16px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.showMoreButton:hover, .showAllButton:hover {
+  background-color: #f9f9f9;
+  border-color: #ccc;
+  color: #333;
+}
+
+.showAllButton {
+  background-color: #f9f9f9;
+  font-size: 0.85rem;
 }
