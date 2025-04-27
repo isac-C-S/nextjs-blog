@@ -190,7 +190,7 @@ export default function Conteudo({receitas, totalpaginas, setPagina, pagina, cat
                     <Image 
                         src={receita.imagem} 
                         alt={receita.titulo} 
-                        width={400} 
+                        width={100} 
                         height={300}
                         style={{
                             width: '100%',

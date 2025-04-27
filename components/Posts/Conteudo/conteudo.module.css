@@ -229,252 +229,6 @@
 
   
 
-@media (min-width: 768px) {
-  .posts {
-    flex-direction: row;
-  
-  }
-  
-  .img {
-    width: 35%;
-    height: auto;
-    min-height: 100%; /* Ensure image fills the height */
-  }
-  
-  .posts_txt {
-    width: 65%;
-    height: auto;
-    padding: 1.8rem; /* Increased padding on larger screens */
-  }
-}
-
-@media (max-width: 767px) {
- 
-  .img {
-    height: 220px; /* Increased image height on mobile */
-  }
-  
-  .posts_txt {
-    padding: 0.8rem 1rem;
-  }
-  
-  .titulo h1 {
-    font-size: 1.3rem;
-  }
-  
-  .texto p {
-    display: block; /* Show all text */
-  }
-  
-  .Conteudo {
-    padding: 0.5rem;
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .paginacaoContainer {
-    gap: 6px;
-  }
-  
-  .paginaControle,
-  .paginaNumero {
-    min-width: 36px;
-    height: 36px;
-    font-size: 14px;
-  }
-}
-
-
-/* Extra small screens / narrow phones */
-@media (max-width: 360px) {
-  .paginacaoContainer {
-    gap: 3px;
-  }
-  
-  /* Hide ellipsis on very small screens to save space */
-  .paginaEllipsis {
-    display: none;
-  }
-  
-  /* Optimize space by showing only essential controls */
-  .paginaControle {
-    min-width: 36px;
-    height: 36px;
-    padding: 0;
-  }
-  
-  .paginaNumero {
-    min-width: 36px;
-    height: 36px;
-    padding: 0;
-  }
-}
-
-/* Fix media query conflicts */
-@media (max-width: 800px) {
-  .Conteudo{
-    margin-top: 100px;
-    background-color: white;
-  }
-
-  .link{
-    margin: 0;
-  }
-
-  .paginacao {
-    padding: 0 !important; /* Override the fixed padding completely */
-  }
-}
-
-@media (max-width: 1050px) {
-  .Conteudo{
-    padding-left: 10px;
-  }
-
-  .img img{
-    height: 100%;
-  }
-
-  .posts_txt{
-    padding: 0;
-    padding-left: 10px;
-   
-   
-  }
-
-  .data{
-    height: 20px;
-    margin-bottom: 10px;
-    margin-top: 20px;
-  }
-
-  .link{
-    margin-top: 0;
-  }
-
-  .posts {
-    height: 320px;
-    min-height: 200px;
-    max-height: 500px;
-    overflow: hidden;
-   
-  }
-
-  .paginacao {
-    padding: 0 !important; /* Override the fixed padding completely */
-  }
-}
-
-@media (max-width: 500px) {
-  .Conteudo {
-    width: 100%;
-  }
-
-  .posts{
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .img {
-    width: 100%;
-  }
-
-  .img img{
-    width: 100%;
-  }
-
-  .posts_txt{
-    width: 100%;
-  }
-
-  .data{
-    width: 100%;
-  }
-}
-
-/* Specific styling for tablets around 768px */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .Conteudo {
-    padding: 0.75rem;
-  }
-  
-  .posts {
-    flex-direction: row;
-    margin-bottom: 1.5rem;
-  }
-  
-  .img {
-    width: 38%;
-    height: 180px;
-    border-radius: 12px 0 0 12px;
-  }
-  
-  .posts_txt {
-    width: 62%;
-    padding: 1rem 1.2rem;
-    height: auto;
-  }
-  
-  .data h4 {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.5rem;
-  }
-  
-  .data p {
-    font-size: 0.7rem;
-  }
-  
-  .titulo h1 {
-    font-size: 1.1rem;
-    line-height: 1.3;
-    margin: 0.2rem 0;
-  }
-  
-  .texto p {
-    font-size: 0.85rem;
-    line-height: 1.4;
-    margin: 0.3rem 0;
-  }
-  
-  .link {
-    margin-top: 0.5rem;
-  }
-  
-  .link a {
-    font-size: 0.8rem;
-  }
-  
-  .paginacao {
-    margin: 1.5rem 0;
-  }
-  
-  .paginaNumero, .paginaControle {
-    min-width: 36px;
-    height: 36px;
-    font-size: 0.85rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .Conteudo {
-    padding: 1rem;
-  }
-  
-  .posts {
-    flex-direction: row;
-  }
-  
-  .img {
-    width: 35%;
-    height: 200px;
-    border-radius: 12px 0 0 12px;
-  }
-  
-  .posts_txt {
-    width: 65%;
-  }
-}
 
 .texto {
   flex-grow: 1;
@@ -541,21 +295,21 @@
 }
 
 
-@media (max-width: 480px) {
-  .paginacaoContainer {
-    gap: 4px;
-    margin: 15px 0;
+@media (min-width: 300px) {
+  .posts_txt{
+    width: 100%;
   }
-  
-  .paginaControle,
-  .paginaNumero {
-    min-width: 40px; /* Larger touch targets */
-    height: 40px; /* Taller buttons for easier tapping */
-    padding: 0 4px;
-    font-size: 14px;
+}
+
+@media (min-width: 600px) {
+  .posts{
+    flex-direction: row;
   }
 
-  .posts{
-    height: 500px;
+  .img{
+    width: 35%;
+    height: auto;
   }
+
+  
 }
