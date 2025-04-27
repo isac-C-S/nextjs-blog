@@ -10,7 +10,7 @@ export default function TopPosts() {
     const router = useRouter();
     
     // Função para limitar caracteres
-    const limitarTexto = (texto, limite = 50) => {
+    const limitarTexto = (texto, limite = 30) => {
         if (texto.length <= limite) return texto;
         return texto.substring(0, limite) + '...';
     };
@@ -55,12 +55,12 @@ export default function TopPosts() {
                                     <Image src={post.imagem || "/item1.jpg"} alt={post.titulo} width={72} height={72}/>
                                 </div>
 
-                                <div >
+                                <div className={styles.p} >
                                     <p title={post.titulo}>{limitarTexto(post.titulo)}</p>
                                 </div>
 
                                 <div className={styles.numero}>
-                                    <h1>{index + 1}</h1>
+                                    <h3>{index + 1}</h3>
                                 </div>
                             </li>
                         ))
@@ -77,7 +77,7 @@ export default function TopPosts() {
                                 </div>
 
                                 <div className={styles.numero}>
-                                    <h1>{index + 1}</h1>
+                                    <h3>{index + 1}</h3>
                                 </div>
                             </li>
                         ))

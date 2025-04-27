@@ -21,6 +21,13 @@
     }
 }
 
+@media (max-width: 1050px) {
+    .Principal {
+        flex-direction: column;
+         margin-top: 50px;
+    }
+}
+
 @media (max-width: 768px) {
     .Principal {
         flex-direction: column;

@@ -22,7 +22,7 @@
   margin-bottom: 1rem;
   border: none; /* Remove borders */
   width: 100%;
-  height: auto; /* Auto height to fit all content */
+  
   flex: 1 0 auto;
 }
 
@@ -227,11 +227,12 @@
   height: 40px;
 }
 
+  
+
 @media (min-width: 768px) {
   .posts {
     flex-direction: row;
-    height: auto; /* Changed from fixed height to auto */
-    min-height: 250px; /* Minimum height instead of fixed */
+  
   }
   
   .img {
@@ -248,10 +249,7 @@
 }
 
 @media (max-width: 767px) {
-  .posts {
-    height: auto;
-  }
-  
+ 
   .img {
     height: 220px; /* Increased image height on mobile */
   }
@@ -287,20 +285,6 @@
   }
 }
 
-@media (max-width: 480px) {
-  .paginacaoContainer {
-    gap: 4px;
-    margin: 15px 0;
-  }
-  
-  .paginaControle,
-  .paginaNumero {
-    min-width: 40px; /* Larger touch targets */
-    height: 40px; /* Taller buttons for easier tapping */
-    padding: 0 4px;
-    font-size: 14px;
-  }
-}
 
 /* Extra small screens / narrow phones */
 @media (max-width: 360px) {
@@ -355,6 +339,8 @@
   .posts_txt{
     padding: 0;
     padding-left: 10px;
+   
+   
   }
 
   .data{
@@ -364,7 +350,15 @@
   }
 
   .link{
-    margin-top: 130px;
+    margin-top: 0;
+  }
+
+  .posts {
+    height: 320px;
+    min-height: 200px;
+    max-height: 500px;
+    overflow: hidden;
+   
   }
 
   .paginacao {
@@ -407,7 +401,6 @@
   
   .posts {
     flex-direction: row;
-    min-height: 180px; /* Good height for tablet view */
     margin-bottom: 1.5rem;
   }
   
@@ -545,4 +538,24 @@
 
 .clearFilter:hover {
     background-color: #f8d7da;
+}
+
+
+@media (max-width: 480px) {
+  .paginacaoContainer {
+    gap: 4px;
+    margin: 15px 0;
+  }
+  
+  .paginaControle,
+  .paginaNumero {
+    min-width: 40px; /* Larger touch targets */
+    height: 40px; /* Taller buttons for easier tapping */
+    padding: 0 4px;
+    font-size: 14px;
+  }
+
+  .posts{
+    height: 500px;
+  }
 }

@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 .container {
-    background-color: white;  /* Cor de fundo branca */
+    background-color: white; 
     height: 90px;
     width: 100%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Sombra suave */
+    border: 1px solid #f0f0f0;  
+    border-radius: 8px;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -11,17 +12,6 @@
     font-style: normal;
     justify-content: center;
     align-items: center;
-}
-
-.container:before {
-    content: '';  /* Criando uma borda adicional */
-    position: absolute;
-    top: -5px;  /* Posicionando a borda acima da container */
-    left: -5px;  /* Posicionando a borda à esquerda */
-    bottom: -5px;  /* Posicionando a borda abaixo da container */
-    border: 3px solid white;  /* Borda adicional branca */
-    border-radius: 15px;  /* Borda arredondada com mais profundidade */
-    z-index: -1;  /* Colocando a borda abaixo da container */
 }
 
 .innerContainer {
@@ -37,8 +27,7 @@
 .container_logo{
     width: 200px;
     height: 90px;
-    margin: 0;
-    margin-left: 50px;
+    margin: 0 50px 0 0;
 }
 
 .container_logo img{
@@ -72,53 +61,139 @@
 .pesquisa{
     align-items: center;
     display: flex;
-    width: 500px; /* Aumentado para largura fixa de 500px */
-    max-width: 100%; /* Garante responsividade */
+    width: 500px;
 }
 
-@media (min-width: 1441px) {
-    .innerContainer {
-        max-width: 1600px;
-        padding: 0 30px;
-    }
-    
-    .container_ul {
-        width: 45%;
-        margin-left: 150px;
-    }
-    
-    .container_ul ul {
-        font-size: 1.1rem;
-    }
-    
-    .pesquisa {
-        width: 550px;
-    }
+.container_hamburguer{
+    display: none;
 }
 
-@media (max-width: 1025px) {
-    .container_ul {
-        margin-left: 0px;
+
+
+@media (min-width: 100px) {
+    .container_ul{
+         display: none;
     }
-}
-
-@media (max-width: 770px) {
-    .container_ul {
-     display: none;
-  }
-
-  .container{
-    justify-content: space-evenly;
-  }
-
-}
-
-@media (max-width: 430px) {
+ 
     .pesquisa{
-      display: none;
+         display: none;
+    }
+ 
+    .container_hamburguer{
+         display: flex;
+         width: 100%;
+         height: 70px;
+         justify-content: center;
+         align-items: center;
+         background-color: white;
+         z-index: 1000;
+         position: relative;
+    }
+    
+    .container_hamburguer.visible {
+         transform: translateY(0);
+    }
+ 
+    .container_hamburguer.fixed {
+         position: fixed;
+         top: 0;
+         left: 0;
+         right: 0;
+    }
+ 
+    .container{
+         flex-direction: column;
+         height: 150px;
+    }
+ 
+    .container_logo{
+         margin: 0;
+    }
+ 
+   /* Menu móvel quando hambúrguer está aberto - base comum */
+    .mobile_menu {
+         width: 100%;
+         background: white;
+         z-index: 999;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+         padding: 20px;
+         box-sizing: border-box;
+         display: flex;
+         flex-direction: column;
+         gap: 20px;
+         overflow-y: auto;
+    }
+ 
+    /* Menu quando o hamburger está fixo no topo */
+    .fixed_menu {
+         position: fixed;
+         top: 70px; /* Altura do menu hambúrguer */
+         left: 0;
+         height: calc(100vh - 70px);
+    }
+ 
+    /* Menu quando o hamburger não está fixo (logo visível) */
+    .relative_menu {
+         position: absolute;
+         top: 100%; /* Coloca o menu logo abaixo do container */
+         left: 0;
+         max-height: 80vh;
+    }
+ 
+    .mobile_search {
+         width: 100%;
+         padding: 10px 0;
+    }
+ 
+    .mobile_nav ul {
+         list-style: none;
+         padding: 0;
+         margin: 0;
+         width: 100%;
+    }
+ 
+    .mobile_nav li {
+         padding: 15px 0;
+         border-bottom: 1px solid #f0f0f0;
+         font-weight: bold;
+         text-align: center;
+    }
+ 
+    .mobile_nav li:last-child {
+         border-bottom: none;
+    }
+ 
+    .mobile_nav p {
+         margin: 0;
+         color: #333;
+         font-size: 18px;
+         transition: color 0.3s ease;
+    }
+ 
+    .mobile_nav p:hover {
+         color: pink;
+         cursor: pointer;
+    }
+ } 
+
+ @media (min-width: 1000px){
+    .container_hamburguer{
+        display: none;
+    }
+    
+    .container_ul{
+        display: flex;
+        margin: 0;
+    }
+    
+    .container{
+        flex-direction: row;
+        height: 90px;
     }
 
-    .container_logo{
-      margin: 0;
+    .pesquisa{
+        display: flex;
+        width: 350px;
     }
-}
+    
+ } 

@@ -167,3 +167,26 @@ export const BuscarCobertura = async (id, setIngredienteCobertura) => {
     }
 
 };
+
+export const BuscarRelacionados = async (id,categoria, setRelacionados) => {
+
+    try {
+        const response = await fetch(`${URLConfig.BACKEND_URL}/Receita/postsRelacionados?categoria=${categoria}&receita=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao buscar as receitas relacionadas');
+        }
+
+        const data = await response.json();
+        setRelacionados(data);
+    } catch (error) {
+        console.error('Erro:', error);
+        throw error;
+    }
+
+};

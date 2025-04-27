@@ -58,13 +58,22 @@ export default function Carrousel({categorias}) {
     swipeToSlide: true,
     arrows: false,
     responsive: [
+
       {
-        breakpoint: 9999, // For very large screens
+        breakpoint: 99900, // Standard desktop down to 1440px
         settings: {
-          slidesToShow: 7, // Show more items on large screens to fill width
+          slidesToShow: 6,
           slidesToScroll: 1,
         }
       },
+      {
+        breakpoint: 1800, // Standard desktop down to 1440px
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+        }
+      },
+
       {
         breakpoint: 1440, // Standard desktop down to 1440px
         settings: {
@@ -73,7 +82,7 @@ export default function Carrousel({categorias}) {
         }
       },
       {
-        breakpoint: 1030, // Tela média (tablets grandes)
+        breakpoint: 1060, // Tela média (tablets grandes)
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
@@ -81,7 +90,7 @@ export default function Carrousel({categorias}) {
         },
       },
       {
-        breakpoint: 768, // Tablets e celulares em modo paisagem
+        breakpoint: 800, // Tablets e celulares em modo paisagem
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -89,7 +98,7 @@ export default function Carrousel({categorias}) {
         },
       },
       {
-        breakpoint: 480, // Celulares
+        breakpoint: 530, // Celulares
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,

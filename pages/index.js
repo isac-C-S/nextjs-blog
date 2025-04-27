@@ -4,7 +4,6 @@ import Footer from "../components/Footer/Footer";
 import Nav from "../components/Nav/nav";
 import Principal from "../components/Posts/posts";
 import {BuscarReceitas} from "../components/Posts/Buscador";
-import { useRouter } from 'next/router';
 import { useState, useEffect } from "react";
 
 export default function Home() {

@@ -1,6 +1,5 @@
 import styles from './Anuncios.module.css';
 import { useEffect } from 'react';
-import Image from 'next/image';
 
 export default function Anuncios() {
     // Anúncios de exemplo com imagens reais ilustrativas

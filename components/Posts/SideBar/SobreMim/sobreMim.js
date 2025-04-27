@@ -11,7 +11,7 @@ export default function SobreMim() {
             </div>
 
             <div className={styles.img}>
-               <Image src="/item1.jpg" alt="Sobre Mim" width={365} height={300}/>
+               <Image src="/item1.jpg" alt="Sobre Mim" width={365} height={500}/>
             </div>
 
             <div className={styles.txt}>

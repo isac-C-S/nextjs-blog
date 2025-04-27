@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import input from "./inputPesquisa.module.css";
 import {BuscarSugestao} from "./Buscador";
 
-export default function InputPesquisa() {
+export default function InputPesquisa({setIsMenuOpen,setIsOpen}) {
     const router = useRouter();
     const [termoPesquisa, setTermoPesquisa] = useState('');
     const [sugestoes, setSugestoes] = useState([]);
@@ -38,7 +38,8 @@ export default function InputPesquisa() {
     const selecionarSugestao = (sugestao) => {
         setTermoPesquisa(sugestao.titulo);
         setMostrarSugestoes(false);
-        
+        setIsMenuOpen(false);
+        setIsOpen(false);
         // Redirecionar para a página da receita
         router.push({
             pathname: '/Receita/page',

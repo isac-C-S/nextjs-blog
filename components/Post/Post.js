@@ -1,5 +1,5 @@
 import styles from './Post.module.css';
-import {CadastrarComentarioNaReceita,BuscarReceitaPorId,BuscarCategoriaDaReceita,BuscarIngredientesDareceita,BuscarModoPreparoDaReceita,BuscarComentariosDaReceita,BuscarCobertura} from './Buscador.js'
+import {BuscarRelacionados,CadastrarComentarioNaReceita,BuscarReceitaPorId,BuscarCategoriaDaReceita,BuscarIngredientesDareceita,BuscarModoPreparoDaReceita,BuscarComentariosDaReceita,BuscarCobertura} from './Buscador.js'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -17,6 +17,7 @@ export default function Post({id}) {
     const [userEmail, setUserEmail] = useState('');
     const [comentario,setComentarios] = useState([]);
     const [commentLimit, setCommentLimit] = useState(3);
+    const [relacionados,setRelacionados] = useState([]);
     const steps = [
         "Antes de tudo, em uma tigela, junte a farinha de trigo, o açúcar, o chocolate em pó e o fermento químico. Misture bem para combinar todos os ingredientes secos, garantindo que o fermento esteja bem distribuído.",
         "Em seguida, em outra tigela, bata os ovos e adicione o leite. Depois, incorpore essa mistura aos ingredientes secos, mexendo bem até obter uma massa homogênea e sem grumos.",
@@ -35,16 +36,17 @@ export default function Post({id}) {
 
     // Buscar o Nome da categoria da receita
     useEffect(() => {
+        const intId = parseInt(id);
         if(Receita.categoria){
             BuscarCategoriaDaReceita(Receita.categoria, setCategoria);
+            BuscarRelacionados(intId, Receita.categoria, setRelacionados);
         }
 
-        const intId = parseInt(id);
         if(Receita && !isNaN(intId)){
             BuscarIngredientesDareceita(intId, setIngredientes);
             BuscarModoPreparoDaReceita(intId, setModoPreparo);
             BuscarComentariosDaReceita(intId, setComentarios);
-            BuscarCobertura(intId, setCobertura);
+            BuscarCobertura(intId, setCobertura);   
         }
     }, [Receita]);
 
@@ -267,9 +269,9 @@ export default function Post({id}) {
                     <h2>Posts Relacionados</h2>
                 </div>
                 <div className={styles.postsGrid}>
-                    {postsRelacionados && postsRelacionados.length > 0 ? (
-                        postsRelacionados.map((post) => (
-                            <Link href={`/posts/${post.id}`} key={post.id}>
+                    {relacionados && relacionados.length > 0 ? (
+                        relacionados.map((post) => (
+                            <Link href={`/Receita/page?id=${post.id}`} key={post.id}>
                                 <div className={styles.relatedPostCard}>
                                     <img 
                                         src={post.imagem || "/placeholder-food.jpg"} 
@@ -277,7 +279,11 @@ export default function Post({id}) {
                                         className={styles.relatedPostImage} 
                                     />
                                     <h4>{post.titulo}</h4>
-                                    <p>{post.categoria}</p>
+                                    <p>
+                                        {typeof post.categoria === 'string'
+                                            ? post.categoria
+                                            : (categoria || post.categoria)}
+                                    </p>
                                 </div>
                             </Link>
                         ))
