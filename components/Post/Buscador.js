@@ -1,7 +1,6 @@
 import URLConfig from '../../Config/URLConfig'
 
 export const BuscarReceitaPorId = async (id, setReceita) => {
-
     try {
         const response = await fetch(`${URLConfig.BACKEND_URL}/Receita/receita/${id}`, {
             method: 'GET',
@@ -16,13 +15,69 @@ export const BuscarReceitaPorId = async (id, setReceita) => {
         }
 
         const data = await response.json();
-        console.log(data);
+        
+        // Verificar se deve incrementar a visualização
+        const deveIncrementarVisualizacao = verificarNovaVisualizacao(id);
+        
+        if (deveIncrementarVisualizacao) {
+            await SomarVisualizaçãoReceita(id);
+        }
+        
         setReceita(data);
     } catch (error) {
         console.error('Erro:', error);
         throw error;
     }
+};
 
+// Função para verificar se é uma nova visualização
+const verificarNovaVisualizacao = (receitaId) => {
+    // Chave para armazenar no localStorage
+    const storageKey = 'receitasVisualizadas';
+    
+    // Obter receitas já visualizadas
+    const receitasVisualizadasJSON = localStorage.getItem(storageKey);
+    const receitasVisualizadas = receitasVisualizadasJSON 
+        ? JSON.parse(receitasVisualizadasJSON) 
+        : {};
+    
+    // Verificar se a receita foi visualizada e quando
+    const agora = new Date().getTime();
+    const ultimaVisualizacao = receitasVisualizadas[receitaId];
+    
+    // Definir período mínimo entre visualizações (24 horas em milissegundos)
+    const periodoMinimo = 24 * 60 * 60 * 1000;
+    
+    // Verificar se é uma nova visualização válida
+    const ehNovaVisualizacao = !ultimaVisualizacao || (agora - ultimaVisualizacao) > periodoMinimo;
+    
+    // Se for nova visualização, atualiza o registro
+    if (ehNovaVisualizacao) {
+        receitasVisualizadas[receitaId] = agora;
+        localStorage.setItem(storageKey, JSON.stringify(receitasVisualizadas));
+    }
+    
+    return ehNovaVisualizacao;
+};
+
+const SomarVisualizaçãoReceita = async (id) => {
+    try {
+        const response = await fetch(`${URLConfig.BACKEND_URL}/Receita/Visualizar/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            console.log(id);
+            throw new Error('Erro ao incrementar visualização da receita');
+        }
+       
+    } catch (error) {
+        console.error('Erro:', error);
+        throw error;
+    }
 };
 
 export const BuscarCategoriaDaReceita = async (id, setCategoria) => {

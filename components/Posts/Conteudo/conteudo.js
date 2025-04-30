@@ -215,8 +215,17 @@ export default function Conteudo({receitas, totalpaginas, setPagina, pagina, cat
                         <p>{receita.texto}</p>
                     </div>
 
-                    <div className={styles.link}>
-                        <a>Ler Mais</a>
+                    <div className={styles.verMais} >
+                        <div className={styles.link}>
+                            <a>Ler Mais</a>
+                        </div>
+                        <div className={styles.visualizacoes}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className={styles.eyeIcon}>
+                                <path d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-44.2 0-80 35.8-80 80s35.8 80 80 80z"/>
+                            </svg>
+                            <span className={styles.viewsLabel}>Visualizações:</span>
+                            <span className={styles.viewsCount}>{receita.visualizacoes}</span>
+                        </div>
                     </div>
                 </div>
             </div>

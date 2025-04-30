@@ -16,6 +16,7 @@ import URLConfig from '../../Config/URLConfig'
             const data = await response.json();
             setReceitas(data.content);
             setTotalPaginas(data.totalPages);
+            console.log(data.content);
         }catch(error){
             console.error("Erro ao buscar posts:", error
             )

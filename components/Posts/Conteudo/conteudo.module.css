@@ -227,9 +227,6 @@
   height: 40px;
 }
 
-  
-
-
 .texto {
   flex-grow: 1;
 }
@@ -294,6 +291,50 @@
     background-color: #f8d7da;
 }
 
+.verMais{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.visualizacoes {
+  display: flex;
+  align-items: center;
+  color: #2e7d32;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 0.4rem 0.8rem;
+  border-radius: 15px;
+  background-color: rgba(46, 125, 50, 0.08);
+  gap: 4px;
+}
+
+.eyeIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 2px;
+  fill: #2e7d32;
+  transition: fill 0.3s ease;
+}
+
+.viewsLabel {
+  font-weight: 600;
+  margin-right: 2px;
+}
+
+.viewsCount {
+  font-weight: 500;
+}
+
+.posts:hover .visualizacoes {
+  color: #1b5e20;
+  background-color: rgba(46, 125, 50, 0.15);
+}
+
+.posts:hover .eyeIcon {
+  fill: #1b5e20;
+}
 
 @media (min-width: 300px) {
   .posts_txt{
