@@ -101,27 +101,8 @@
   }
 }
 
-@media (max-width: 1200px) {
-    .SeInscreva {
-        width: 100vw;
-        max-width: 100vw;
-        padding: 0 20px;
-        margin: 0 0 40px 0;
-        box-sizing: border-box;
-        text-align: center;
-    }
-    
-    .titulo {
-        margin-bottom: 20px;
-    }
-    
-    .redes {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-    }
-    
-    .redeItem {
-        transform: scale(1.2);
-    }
+@media (min-width: 300px) {
+  .SeInscreva{
+    width: 100%;
+  }
 }

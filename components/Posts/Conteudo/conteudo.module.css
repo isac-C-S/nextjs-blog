@@ -299,6 +299,10 @@
   .posts_txt{
     width: 100%;
   }
+
+  .paginacaoContainer{
+    gap: 0;
+  }
 }
 
 @media (min-width: 600px) {

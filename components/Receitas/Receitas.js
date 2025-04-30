@@ -9,7 +9,9 @@ export default function Receitas({id}) {
     
     <div className={styles.container}>
          <Post id={id} />
-         <SideBar/>
+        
+            <SideBar/>
+        
     </div>
        
     
