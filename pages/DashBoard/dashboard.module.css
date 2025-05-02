@@ -1,0 +1,86 @@
+/* Estilos para o DashBoard administrativo */
+.dashboardContainer {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #fff0f6 0%, #ffe3ec 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 10px 60px 10px;
+  font-family: 'Playfair Display', serif;
+}
+
+.dashboardTitle {
+  font-size: 2.5rem;
+  font-family: 'Cinzel', serif;
+  color: #e84d85;
+  margin-bottom: 10px;
+  text-align: center;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.dashboardSubtitle {
+  font-size: 1.1rem;
+  color: #888;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 900px;
+}
+
+.dashboardCard {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(232, 77, 133, 0.08);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+  border: 1.5px solid #ffe3ec;
+}
+
+.dashboardCard:hover {
+  box-shadow: 0 8px 32px rgba(232, 77, 133, 0.18);
+  transform: translateY(-4px) scale(1.03);
+  border-color: #e84d85;
+}
+
+.dashboardCardIcon {
+  font-size: 2.5rem;
+  color: #e84d85;
+  margin-bottom: 18px;
+}
+
+.dashboardCardTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #e84d85;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.dashboardCardDesc {
+  font-size: 1rem;
+  color: #888;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .dashboardTitle {
+    font-size: 1.5rem;
+  }
+  .dashboardGrid {
+    gap: 1rem;
+  }
+  .dashboardCard {
+    padding: 20px 10px;
+  }
+}
