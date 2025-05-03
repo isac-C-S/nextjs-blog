@@ -134,4 +134,49 @@ const stringToSign = `public_id=${publicId}&timestamp=${timestamp}${process.env.
 return CryptoJS.SHA1(stringToSign).toString();
 };
 
+// Função para atualizar a categoria
+export async function AtualizarCategoria(categoriaId, nome, imagem, imagemAntiga, setCategorias) {
+    try {
+      let imagemUrl = imagemAntiga;
+      
+      // Se uma nova imagem foi fornecida
+      if (imagem) {
+        // Primeiro, fazer upload da nova imagem para o Cloudinary
+        const cloudinaryResponse = await uploadImageToCloudinary(imagem);
+        imagemUrl = cloudinaryResponse.secure_url;
+        
+        // Depois, deletar a imagem antiga se existir
+        if (imagemAntiga) {
+          await deletarImagemDoCloudinary(imagemAntiga);
+        }
+      }
+      
+      // Enviar os dados atualizados para o backend
+      const data = {
+        id: categoriaId,
+        nome: nome,
+        imagem: imagemUrl
+      };
+      
+      const response = await fetch(`${URLConfig.BACKEND_URL}/Categoria/${categoriaId}`, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
   
+      if (response.ok) {
+        // Atualiza a lista de categorias após sucesso
+        BuscarCategorias(setCategorias);
+        return true;
+      } else {
+        console.error("Erro ao atualizar categoria:", await response.text());
+        return false;
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar categoria:", error);
+      return false;
+    }
+  };
+

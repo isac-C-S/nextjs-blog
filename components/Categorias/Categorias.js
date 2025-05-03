@@ -6,12 +6,16 @@ import {BuscarReceitas} from "../Posts/Buscador";
 import {ExcluirCategoria} from "../AreaAdministrativa/CategoriaAdministrativo/Scrpt";
 import { useAuth } from '../../Config/AuthContext';
 import CategoriaAdministrativo from "../AreaAdministrativa/CategoriaAdministrativo/CategoriaAdministrativo";
+import EditarCategoriaModal from "../AreaAdministrativa/CategoriaAdministrativo/EditarCategoriaModal";
+import { AtualizarCategoria } from "../AreaAdministrativa/CategoriaAdministrativo/Scrpt";
 
 export default function Categorias({setReceitas, categorias, setCategorias, setTotalPaginas, setPagina, pagina, setCategoriaSelecionada}) {
   const { isAdmin } = useAuth();
   const [categoriaAtual, setCategoriaAtual] = useState("");
   const [hoveredId, setHoveredId] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [categoriaParaEditar, setCategoriaParaEditar] = useState(null);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
 
   useEffect(() => {BuscarCategorias(setCategorias);}, []);
@@ -77,6 +81,22 @@ const tratarExcluirCategoria = (e, categoriaId, categoriaNome, imagemUrl) => {
   }
 };
 
+  // Função para abrir o modal de edição
+  const abrirModalEdicao = (e, categoria) => {
+    e.stopPropagation(); // Impede a propagação do clique
+    setCategoriaParaEditar(categoria);
+    setShowEditModal(true);
+  };
+
+  // Função para atualizar categoria
+  const tratarAtualizarCategoria = async ({ id, nome, imagem, imagemUrl }) => {
+    const sucesso = await AtualizarCategoria(id, nome, imagem, imagemUrl, setCategorias);
+    if (sucesso) {
+      setShowEditModal(false);
+      setCategoriaParaEditar(null);
+    }
+  };
+
   return (
      <div className={styles.categorias}>
         {isAdmin && (
@@ -94,6 +114,16 @@ const tratarExcluirCategoria = (e, categoriaId, categoriaNome, imagemUrl) => {
                 onClose={() => setShowModal(false)}
                 onCadastrar={tratarCadastrarCategoria}
                 setCategorias={setCategorias}
+              />
+            )}
+            {showEditModal && categoriaParaEditar && (
+              <EditarCategoriaModal
+                categoria={categoriaParaEditar}
+                onClose={() => {
+                  setShowEditModal(false);
+                  setCategoriaParaEditar(null);
+                }}
+                onAtualizar={tratarAtualizarCategoria}
               />
             )}
           </div>
@@ -127,7 +157,7 @@ const tratarExcluirCategoria = (e, categoriaId, categoriaNome, imagemUrl) => {
               >
                 <button 
                   className={styles.iconButton} 
-                  onClick={e => {e.stopPropagation(); /* lógica editar */}}
+                  onClick={e => abrirModalEdicao(e, categoria)}
                   title="Editar"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
