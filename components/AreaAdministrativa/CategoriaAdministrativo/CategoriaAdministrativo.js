@@ -1,54 +1,197 @@
-import Image from "next/image";
+import { useState, useRef, useCallback } from "react";
 import styles from "./CategoriaAdministrativo.module.css";
-import { useState, useEffect } from "react";
-import {BuscarReceitasPorCategoria,BuscarCategorias} from "../../Categorias/Buscador";
-import {BuscarReceitas} from "../../Posts/Buscador";
+import {CadastrarCategoria} from "./Scrpt";
 
-export default function CategoriaAdministrativo({setReceitas, categorias, setCategorias, setTotalPaginas, setPagina, pagina, setCategoriaSelecionada}) {
-  const [categoriaAtual, setCategoriaAtual] = useState("");
 
- useEffect(() => {BuscarCategorias(setCategorias);}, []);
+export default function CategoriaAdministrativo({ onClose, onCadastrar,setCategorias}) {
+  const [nome, setNome] = useState("");
+  const [imagem, setImagem] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const fileInputRef = useRef(null);
+  const [estaArrastando, setEstaArrastando] = useState(false);
 
-  // aciona a busca de receita de acordo com a categoria clicada. se clicar em uma categoria já selecionada, ele limpa a categoria e busca todas as receitas novamente.
-  const handleCategoriaClick = (id) => {
-    if (categoriaAtual === id) {
-      setCategoriaAtual("");
-      setCategoriaSelecionada(null);
-      setPagina(0);
+  // Lida com upload e preview da imagem
+  const tratarMudancaImagem = useCallback((e) => {
+    e.stopPropagation();
     
-      BuscarReceitas(0, setReceitas, setTotalPaginas);
-    } else {
-      setCategoriaAtual(id);
-      setCategoriaSelecionada(id);
-      setPagina(0);
-      BuscarReceitasPorCategoria(id, setReceitas, setTotalPaginas, 0);
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      
+      if (file) {
+        setImagem(file);
+        
+        const reader = new FileReader();
+        reader.onloadend = () => setPreview(reader.result);
+        reader.readAsDataURL(file);
+      }
     }
+  }, []);
+
+  // Processa arquivo de imagem
+  const processarArquivoImagem = useCallback((file) => {
+    if (file && file.type.startsWith('image/')) {
+      setImagem(file);
+      
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result);
+      reader.readAsDataURL(file);
+    }
+  }, []);
+
+  // Função para lidar com o drop de arquivos
+  const tratarSoltar = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setEstaArrastando(false);
+    
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const file = e.dataTransfer.files[0];
+      processarArquivoImagem(file);
+      
+      if (fileInputRef.current) {
+        fileInputRef.current.files = e.dataTransfer.files;
+      }
+    }
+  }, [processarArquivoImagem]);
+
+  // Eventos para controlar o drag & drop
+  const tratarArrastoPor = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const tratarArrastoEntrar = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setEstaArrastando(true);
+  }, []);
+
+  const tratarArrastoSair = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setEstaArrastando(false);
+  }, []);
+
+  // Função para abrir o seletor de arquivos
+  const tratarCliqueNaCaixaArquivo = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+      fileInputRef.current.click();
+    }
+  }, []);
+
+  // Função para remover a imagem e reativar seleção
+  const tratarRemoverImagem = useCallback((e) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    
+    setImagem(null);
+    setPreview(null);
+    
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }, []);
+
+  // Lida com o cadastro da categoria
+  const handleCadastrar = () => {
+    if (!nome || !imagem) return;
+    onCadastrar({ nome, imagem });
+    CadastrarCategoria(nome, imagem, setCategorias);
+    setNome("");
+    setImagem(null);
+    setPreview(null);
   };
 
-  // Aciona a Busca de Acordo com a paginação e a categoria selecionada
-  useEffect(() => {
-    if (categoriaAtual) {
-      BuscarReceitasPorCategoria(categoriaAtual, setReceitas, setTotalPaginas, pagina);
-    }
-  }, [pagina, categoriaAtual, setTotalPaginas, setReceitas]);
-
   return (
-     <div className={styles.categorias}>
-        {categorias.map((categoria => (
-          <div 
-            className={`${styles.categoria} ${categoriaAtual === categoria.id ? styles.categoriaAtiva : ''}`} 
-            onClick={() => handleCategoriaClick(categoria.id)} 
-            key={categoria.id}
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+        <div className={styles.modalHeader}>
+          <h2 className={styles.modalTitle}>Cadastrar Nova Categoria</h2>
+          <button 
+            className={styles.closeButton} 
+            onClick={onClose}
+            aria-label="Fechar"
           >
-            <Image 
-              src={categoria.imagem} 
-              alt={categoria.nome}   
-              width={500}                 
-              height={300}              
+            &times;
+          </button>
+        </div>
+        
+        <label className={styles.modalLabel}>
+          Nome da Categoria:
+          <input
+            className={styles.modalInputText}
+            type="text"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            placeholder="Digite o nome da categoria"
+          />
+        </label>
+        
+        <label className={styles.modalLabel}>
+          Imagem:
+          <div className={styles.fileUploadContainer}>
+            <input
+              ref={fileInputRef}
+              className={styles.modalInputFile}
+              type="file"
+              accept="image/*"
+              onChange={tratarMudancaImagem}
+              onClick={e => e.stopPropagation()}
+              disabled={!!preview}
             />
-            <p style={{fontSize:"medium"}}>{categoria.nome}</p>
+            {!preview ? (
+              <div 
+                className={`${styles.fileUploadBox} ${estaArrastando ? styles.dragging : ''}`}
+                onClick={tratarCliqueNaCaixaArquivo}
+                onDragOver={tratarArrastoPor}
+                onDragEnter={tratarArrastoEntrar}
+                onDragLeave={tratarArrastoSair}
+                onDrop={tratarSoltar}
+              >
+                <span className={styles.fileUploadIcon}>📷</span>
+                <span className={styles.fileUploadText}>
+                  {estaArrastando ? 'Solte a imagem aqui' : 'Selecione uma imagem'}
+                </span>
+                <span className={styles.fileUploadSubtext}>
+                  {estaArrastando ? '' : 'ou arraste e solte aqui'}
+                </span>
+              </div>
+            ) : (
+              <div className={styles.categoriaPreview}>
+                <div className={styles.previewImageContainer}>
+                  <img src={preview} alt="Preview" className={styles.previewImage} />
+                  <button 
+                    type="button" 
+                    className={styles.removePreview} 
+                    onClick={tratarRemoverImagem}
+                    aria-label="Remover imagem"
+                  >
+                    ×
+                  </button>
+                </div>
+                <p className={styles.previewNome}>{nome || "Nome da categoria"}</p>
+              </div>
+            )}
           </div>
-        )))}
-     </div>
+        </label>
+        
+        <div className={styles.buttonGroup}>
+          <button
+            className={`${styles.modalBtn} ${styles.modalBtnSubmit}`}
+            type="button"
+            onClick={handleCadastrar}
+            disabled={!nome || !imagem}
+          >
+            Cadastrar
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
