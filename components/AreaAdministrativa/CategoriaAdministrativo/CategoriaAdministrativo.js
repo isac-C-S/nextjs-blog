@@ -1,14 +1,11 @@
 import Image from "next/image";
-import styles from "./categorias.module.css";
+import styles from "./CategoriaAdministrativo.module.css";
 import { useState, useEffect } from "react";
-import {BuscarReceitasPorCategoria,BuscarCategorias} from "./Buscador";
-import {BuscarReceitas} from "../Posts/Buscador";
-import { useAuth } from '../../Config/AuthContext';
+import {BuscarReceitasPorCategoria,BuscarCategorias} from "../../Categorias/Buscador";
+import {BuscarReceitas} from "../../Posts/Buscador";
 
-export default function Categorias({setReceitas, categorias, setCategorias, setTotalPaginas, setPagina, pagina, setCategoriaSelecionada}) {
-  const { isAdmin } = useAuth();
+export default function CategoriaAdministrativo({setReceitas, categorias, setCategorias, setTotalPaginas, setPagina, pagina, setCategoriaSelecionada}) {
   const [categoriaAtual, setCategoriaAtual] = useState("");
-  const [hoveredId, setHoveredId] = useState(null);
 
  useEffect(() => {BuscarCategorias(setCategorias);}, []);
 
@@ -37,28 +34,11 @@ export default function Categorias({setReceitas, categorias, setCategorias, setT
 
   return (
      <div className={styles.categorias}>
-        {isAdmin && (
-          <div >
-            <div 
-              className={styles.categoria}
-              style={{ position: 'relative', border: '2px dashed #e84d85', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#e84d85', fontWeight: 'bold', fontSize: 'medium', cursor: 'pointer', minHeight: 150, margin: 0}}
-              onClick={() => {/* lógica para criar nova categoria */}}
-            >
-              <span style={{fontSize: 40, lineHeight: 1}}>&#43;</span>
-              <span>Criar nova categoria</span>
-            </div>
-          </div>
-        )}
-      
         {categorias.map((categoria => (
-          
           <div 
             className={`${styles.categoria} ${categoriaAtual === categoria.id ? styles.categoriaAtiva : ''}`} 
             onClick={() => handleCategoriaClick(categoria.id)} 
             key={categoria.id}
-            onMouseEnter={() => setHoveredId(categoria.id)}
-            onMouseLeave={() => setHoveredId(null)}
-            style={{position: 'relative'}}
           >
             <Image 
               src={categoria.imagem} 
@@ -67,12 +47,6 @@ export default function Categorias({setReceitas, categorias, setCategorias, setT
               height={300}              
             />
             <p style={{fontSize:"medium"}}>{categoria.nome}</p>
-            {isAdmin && hoveredId === categoria.id && (
-              <div className={styles.adminActionsAbove}>
-                <button className={styles.adminBtn} onClick={e => {e.stopPropagation(); /* lógica editar */}}>Editar</button>
-                <button className={styles.adminBtnDelete} onClick={e => {e.stopPropagation(); /* lógica apagar */}}>Apagar</button>
-              </div>
-            )}
           </div>
         )))}
      </div>

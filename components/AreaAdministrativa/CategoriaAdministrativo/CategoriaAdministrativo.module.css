@@ -1,0 +1,129 @@
+.categorias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    padding: 15px;
+    background-color: #fffafb; /* Extremely subtle light pink, almost white */
+    height: 250px;
+  }
+  
+  .categoria {
+    cursor: pointer;
+    background-color: #fffafb; /* Same extremely subtle pink as categorias */
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  
+  
+  .categoria p {
+    text-align: center;
+    margin: 8px 0;
+    padding: 0 5px;
+  }
+  .categorias{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      margin-top: 30px;
+      padding: 0px 150px;
+      align-items: center;
+      justify-content: space-evenly;
+      margin-bottom: 50px;
+      margin-top: 50px;
+      height: 100%;
+     
+  }
+  
+  .categoria{
+      width: 112px;
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      color: var(--text-color);
+      text-transform: uppercase;
+      font-family: "Playfair Display", serif;
+      font-size: small;
+      justify-content: space-between;
+      margin-top: 20px;
+  }
+  
+  .categoria:hover{
+      cursor: pointer;
+  }
+  .categoria img{
+      height: 112px;
+      width: 112px;
+      border-radius: 100%;
+      transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  
+  .categoria:hover img {
+      transform: rotate(20deg); /* Rotação de 30 graus ao passar o mouse */
+      transition: transform 0.5s ease-in-out; /* Transição suave para a imagem */
+    }
+  
+    .categoria:hover p {
+      color: pink; /* Mude a cor do texto ao passar o mouse */
+      transform: scale(1.2); /* Aumenta o texto ao passar o mouse */
+      transition: transform 0.3s ease, color 0.3s ease; /* Transições suaves para o texto */
+    }
+  
+    .categoria img {
+      transition: transform 0.3s ease; /* Transição padrão para a imagem */
+    }
+    
+    .categoria p {
+      font-size: 10px;
+      text-align: center;
+      transition: transform 0.3s ease, color 0.3s ease; /* Transição padrão para o texto */
+    }
+  
+    .categoriaAtiva {
+      color: pink; /* Mude a cor do texto ao passar o mouse */
+      transform: scale(1.2); /* Aumenta o texto ao passar o mouse */
+      transition: all 0.3s ease;
+  }
+  
+    @media (max-width: 1030px) {
+      .categorias{
+          padding: 0px;
+      }
+      
+  }
+  
+  
+  
+  @media (max-width: 900px) {
+      .categorias{
+          padding: 0px 110px;
+          margin-top: 80px;
+          flex-wrap: wrap;
+      }
+  
+      .categoria{
+        margin-bottom: 20px;
+      }
+      
+      
+  }
+  
+  @media (max-width: 450px) {
+  
+      .categorias{
+          padding: 0px 50px;
+          
+      }
+  
+  }
+  
+  @media (max-width: 350px) {
+  
+      .categorias{
+          padding: 0;
+          
+      }
+  
+  }

@@ -3,6 +3,7 @@ import { router } from 'next/router';
 import styles from './login.module.css';
 import Link from 'next/link';
 import {Autenticar} from '../../Config/Autenticação';
+import { useAuth } from '../../Config/AuthContext';
 
 function FormGroup({ id, label, type, value, onChange, placeholder }) {
   return (
@@ -23,6 +24,7 @@ function FormGroup({ id, label, type, value, onChange, placeholder }) {
 
 export default function Login() {
   const [form, setForm] = useState({ login: '', senha: '' });
+  const { setIsAdmin } = useAuth();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value });
@@ -32,11 +34,12 @@ export default function Login() {
     e.preventDefault();
     const sucesso = await Autenticar(form.login, form.senha);
     if (sucesso) {
-        router.push('/DashBoard/page');
+        setIsAdmin(true); // Ativa modo administrador
+        router.push('/');
     } else {
         alert('Login inválido!');
     }
-};
+  };
 
   return (
     <div className={styles.loginContainer}>

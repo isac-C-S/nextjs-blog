@@ -1,0 +1,360 @@
+.Conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    font-family: 'Cinzel', serif; /* Usar Cinzel para cabeçalhos */
+    min-height: 100%;
+    flex: 1;
+  }
+  
+  .posts {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: none; /* Remove shadows */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    border: none; /* Remove borders */
+    width: 100%;
+    
+    flex: 1 0 auto;
+  }
+  
+  .posts:hover {
+    transform: translateY(-3px);
+    box-shadow: none; /* Remove shadows on hover */
+  }
+  
+  .posts_txt {
+    padding: 1.5rem; /* Increased padding */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Increased gap between elements */
+    min-height: auto; /* Auto minimum height */
+    justify-content: space-between;
+    width: 60%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.2rem;
+  }
+  
+  .data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .data h4 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  
+  .data p {
+    font-size: 0.75rem;
+    color: #888;
+    font-weight: 400;
+    font-style: italic;
+    font-family: 'Lora', serif; /* Fonte padrão para o corpo */
+    line-height: 1.6; /* Melhor legibilidade */
+  }
+  
+  .img {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+  }
+  
+  .img img {
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    width: 100%;
+    height: 100%; /* Fill the container */
+  }
+  
+  .posts:hover .img img {
+    transform: scale(1.05);
+  }
+  
+  .titulo h1 {
+    font-size: 1.4rem; /* Increased font size */
+    font-weight: 700;
+    color: #333;
+    line-height: 1.4;
+    margin: 0.5rem 0;
+    transition: color 0.2s ease;
+    height: auto;
+    max-height: none; /* Removed max height limitation */
+    overflow: visible; /* Allow text to be fully visible */
+    display: block; /* Changed from -webkit-box to show full content */
+  }
+  
+  .posts:hover .titulo h1 {
+    color: #ff6b6b;
+  }
+  
+  .texto p {
+    font-size: 0.95rem; /* Increased font size */
+    line-height: 1.7;
+    color: #666;
+    overflow: visible; /* Allow text to be fully visible */
+    display: block; /* Changed from -webkit-box to show full content */
+    margin: 0.5rem 0;
+    height: auto;
+    max-height: none; /* Removed max height limitation */
+    font-family: 'Lora', serif; /* Fonte padrão para o corpo */
+    line-height: 1.6; /* Melhor legibilidade */
+  }
+  
+  .link {
+    margin-top: 1rem; /* Increased margin */
+    padding-top: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .link a {
+    display: inline-block;
+    color: #ff6b6b;
+    font-weight: 600;
+    font-size: 0.9rem;
+    position: relative;
+    padding-bottom: 3px;
+    cursor: pointer;
+    text-decoration: none; /* Remove o sublinhado padrão */
+    transition: color 0.3s ease; /* Suaviza a transição de cor */
+  }
+  
+  .link a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #ff6b6b;
+    transition: width 0.3s ease;
+    border: none; /* Remove any bottom borders from links */
+  }
+  
+  .link a:hover::after {
+    width: 100%;
+  }
+  
+  .posts:hover .link a {
+    color: pink; /* Muda a cor do texto ao passar o mouse */
+  }
+  
+  .posts:hover .link a::after {
+    width: 100%; /* Expande a linha para o tamanho do texto */
+  }
+  
+  .paginacao {
+    margin: 2rem 0 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: larger;
+    padding: 0; /* Remove the fixed padding */
+  }
+  
+  .paginacaoContainer {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    height: 40px;
+  }
+  
+  .paginaNumero, .paginaControle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none; /* Remove borders from pagination buttons */
+    background-color: #f5f5f5;
+    color: #555;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+  }
+  
+  .paginaNumero:hover, .paginaControle:hover {
+    background-color: #ff6b6b;
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  .paginaAtual {
+    background-color: #ff6b6b;
+    color: white;
+    box-shadow: none; /* Remove pagination shadows */
+  }
+  
+  .paginaDesabilitada {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .paginaDesabilitada:hover {
+    background-color: #f5f5f5;
+    color: #555;
+    transform: none;
+  }
+  
+  .paginaEllipsis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-weight: 600;
+    height: 40px;
+  }
+  
+  .texto {
+    flex-grow: 1;
+  }
+  
+  /* Add these styles at the end of your CSS file */
+  
+  .placeholder {
+      opacity: 0.7;
+      cursor: default;
+  }
+  
+  .placeholderImage {
+      width: 100%;
+      height: 100%;
+      background-color: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  
+  .placeholder .posts_txt {
+      color: #777;
+  }
+  
+  .placeholder:hover {
+      transform: none;
+      box-shadow: none;
+  }
+  
+  /* Add this to your existing CSS */
+  .categoryFilter {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      width: 100%;
+  }
+  
+  .categoryBadge {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 25px;
+      padding: 8px 20px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  
+  .clearFilter {
+      background: none;
+      border: none;
+      color: #dc3545;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-left: 10px;
+      padding: 0 5px;
+      border-radius: 50%;
+      transition: all 0.2s;
+  }
+  
+  .clearFilter:hover {
+      background-color: #f8d7da;
+  }
+  
+  .verMais{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .visualizacoes {
+    display: flex;
+    align-items: center;
+    color: #2e7d32;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+    background-color: rgba(46, 125, 50, 0.08);
+    gap: 4px;
+  }
+  
+  .eyeIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 2px;
+    fill: #2e7d32;
+    transition: fill 0.3s ease;
+  }
+  
+  .viewsLabel {
+    font-weight: 600;
+    margin-right: 2px;
+  }
+  
+  .viewsCount {
+    font-weight: 500;
+  }
+  
+  .posts:hover .visualizacoes {
+    color: #1b5e20;
+    background-color: rgba(46, 125, 50, 0.15);
+  }
+  
+  .posts:hover .eyeIcon {
+    fill: #1b5e20;
+  }
+  
+  @media (min-width: 300px) {
+    .posts_txt{
+      width: 100%;
+    }
+  
+    .paginacaoContainer{
+      gap: 0;
+    }
+  }
+  
+  @media (min-width: 600px) {
+    .posts{
+      flex-direction: row;
+    }
+  
+    .img{
+      width: 35%;
+      height: auto;
+    }
+  
+    
+  }
