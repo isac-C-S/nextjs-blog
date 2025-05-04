@@ -2,10 +2,14 @@ import Image from "next/image";
 import styles from "./conteudo.module.css";
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
+import { useAuth } from '../../../Config/AuthContext';
+import { DeletarReceita } from "./script";
 
-export default function Conteudo({receitas, totalpaginas, setPagina, pagina, categorias, categoriaSelecionada}) {
+export default function Conteudo({setReceitas, setTotalPaginas,receitas, totalpaginas, setPagina, pagina, categorias, categoriaSelecionada}) {
     const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
     const router = useRouter();
+    const { isAdmin } = useAuth();
+    const [hoveredId, setHoveredId] = useState(null);
 
     // Formata a data para um formato mais amigavel para o usuario
     const formatarData = (dataString) => {
@@ -149,6 +153,32 @@ export default function Conteudo({receitas, totalpaginas, setPagina, pagina, cat
         })
     };
 
+    // Redireciona para a página de criação de receita
+    const IrCriarReceita = () => {
+        router.push('/Admin/CriarReceita');
+    };
+
+    // Simplified hover handler - we only need to track which recipe is being hovered
+    const handleMouseEnter = (id) => {
+        setHoveredId(id);
+    };
+
+    // Função para editar receita
+    const editarReceita = (e, receitaId) => {
+        e.stopPropagation(); // Impede a propagação do clique
+        router.push(`/Admin/EditarReceita?id=${receitaId}`);
+    };
+
+    // Função para excluir receita
+    const excluirReceita = (e, receitaId, titulo) => {
+        e.stopPropagation(); // Impede a propagação do clique
+        const confirmacao = window.confirm(`Tem certeza que deseja excluir a receita "${titulo}"?`);
+        
+        if (confirmacao) {
+            DeletarReceita(receitaId,pagina, setReceitas, setTotalPaginas);  
+        };
+    };
+
     // Create placeholder items if needed
     const renderPlaceholders = () => {
         const placeholdersNeeded = Math.max(0, 8 - receitas.length);
@@ -181,54 +211,114 @@ export default function Conteudo({receitas, totalpaginas, setPagina, pagina, cat
 
     return (
         <div className={styles.Conteudo}>
-            {/* Removed category badge section */}
+            {/* Admin create new recipe option */}
+            {isAdmin && (
+                <div 
+                    className={styles.posts}
+                    style={{ 
+                        border: '2px dashed #e84d85', 
+                        cursor: 'pointer'
+                    }}
+                    onClick={IrCriarReceita}
+                >
+                    <div className={styles.img} style={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        backgroundColor: '#f8f8f8'
+                    }}>
+                        <span style={{ fontSize: 60, color: '#e84d85' }}>&#43;</span>
+                    </div>
+                    <div className={styles.posts_txt}>
+                        <div className={styles.data}>
+                            <h4>Nova</h4>
+                            <p>Área administrativa</p>
+                        </div>
+                        <div className={styles.titulo}>
+                            <h1 style={{ color: '#e84d85' }}>Criar nova receita</h1>
+                        </div>
+                        <div className={styles.texto}>
+                            <p>Clique aqui para adicionar uma nova receita ao blog. Você poderá incluir ingredientes, modo de preparo e fotos.</p>
+                        </div>
+                        <div className={styles.verMais}>
+                            <div className={styles.link}>
+                                <a style={{ color: '#e84d85' }}>Criar agora</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
             
             {receitas.map((receita =>(
 
-                <div key={receita.id} className={styles.posts} onClick={IrReceita(receita.id)}>
-                <div className={styles.img}>
-                    <Image 
-                        src={receita.imagem} 
-                        alt={receita.titulo} 
-                        width={100} 
-                        height={300}
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover'
-                        }}
-                        priority={pagina === 0 && receitas.indexOf(receita) < 2}
-                    />
-                </div>
-                <div className={styles.posts_txt}>
-                    
-                    <div className={styles.data}>
-                        <h4>{categorias.find(cat => cat.id === receita.categoria)?.nome}</h4>
-                        <p>{formatarData(receita.dataPostagem)}</p>
+                <div 
+                    key={receita.id} 
+                    className={styles.posts} 
+                    onClick={IrReceita(receita.id)}
+                    onMouseEnter={() => handleMouseEnter(receita.id)}
+                    onMouseLeave={() => setHoveredId(null)}
+                >
+                    <div className={styles.img}>
+                        <Image 
+                            src={receita.imagem} 
+                            alt={receita.titulo} 
+                            width={100} 
+                            height={300}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover'
+                            }}
+                            priority={pagina === 0 && receitas.indexOf(receita) < 2}
+                        />
                     </div>
+                    <div className={styles.posts_txt}>
+                        
+                        {/* Conditionally render either data or admin buttons */}
+                        {isAdmin && hoveredId === receita.id ? (
+                            <div className={`${styles.data} ${styles.adminActionsInline}`}>
+                                <button 
+                                    className={styles.iconButton} 
+                                    onClick={e => excluirReceita(e, receita.id, receita.titulo)}
+                                    title="Excluir"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        ) : (
+                            <div className={styles.data}>
+                                <h4>{categorias.find(cat => cat.id === receita.categoria)?.nome}</h4>
+                                <p>{formatarData(receita.dataPostagem)}</p>
+                            </div>
+                        )}
 
-                    <div className={styles.titulo}>
-                        <h1>{receita.titulo}</h1>
-                    </div>
-
-                    <div className={styles.texto}>
-                        <p>{receita.texto}</p>
-                    </div>
-
-                    <div className={styles.verMais} >
-                        <div className={styles.link}>
-                            <a>Ler Mais</a>
+                        <div className={styles.titulo}>
+                            <h1>{receita.titulo}</h1>
                         </div>
-                        <div className={styles.visualizacoes}>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className={styles.eyeIcon}>
-                                <path d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-44.2 0-80 35.8-80 80s35.8 80 80 80z"/>
-                            </svg>
-                            <span className={styles.viewsLabel}>Visualizações:</span>
-                            <span className={styles.viewsCount}>{receita.visualizacoes}</span>
+
+                        <div className={styles.texto}>
+                            <p>{receita.texto}</p>
+                        </div>
+
+                        <div className={styles.verMais} >
+                            <div className={styles.link}>
+                                <a>Ler Mais</a>
+                            </div>
+                            <div className={styles.visualizacoes}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className={styles.eyeIcon}>
+                                    <path d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-44.2 0-80 35.8-80 80s35.8 80 80 80z"/>
+                                </svg>
+                                <span className={styles.viewsLabel}>Visualizações:</span>
+                                <span className={styles.viewsCount}>{receita.visualizacoes}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
            )))}
             

@@ -4,7 +4,7 @@ import Conteudo from "./Conteudo/conteudo";
 import SideBar from "./SideBar/sideBar";
 
 
-export default function Principal({receitas, totalpaginas, setPagina, pagina, categorias, categoriaSelecionada}) {
+export default function Principal({setReceitas, setTotalPaginas,receitas, totalpaginas, setPagina, pagina, categorias, categoriaSelecionada}) {
   return (
     <div className={styles.Principal}>
         <Conteudo  
@@ -14,6 +14,8 @@ export default function Principal({receitas, totalpaginas, setPagina, pagina, ca
           setPagina={setPagina} 
           pagina={pagina}
           categoriaSelecionada={categoriaSelecionada} 
+          setReceitas={setReceitas}
+          setTotalPaginas={setTotalPaginas}
         />
         <SideBar/>
     </div>

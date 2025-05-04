@@ -19,6 +19,7 @@ export const CadastrarCategoria = async (nome, imagem, setCategorias) => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify(data),
         });
 
@@ -48,6 +49,7 @@ export const ExcluirCategoria = async (categoriaId, imagemUrl, setCategorias) =>
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
       });
   
       if (!deleteResponse.ok) {
@@ -163,6 +165,7 @@ export async function AtualizarCategoria(categoriaId, nome, imagem, imagemAntiga
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(data),
       });
   

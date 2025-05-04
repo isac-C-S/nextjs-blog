@@ -5,6 +5,9 @@ import Nav from "../components/Nav/nav";
 import Principal from "../components/Posts/posts";
 import {BuscarReceitas} from "../components/Posts/Buscador";
 import { useState, useEffect } from "react";
+import { createContext, useContext } from 'react';
+
+
 
 export default function Home() {
    const [receitas, setReceitas] = useState([]);
@@ -20,7 +23,10 @@ export default function Home() {
       }
   }, [pagina, categoriaSelecionada]);
 
-  return (
+  
+
+
+  return ( 
       <main>
         <Nav/>
         <Carrousel categorias={categorias} />
@@ -40,6 +46,9 @@ export default function Home() {
           pagina={pagina} 
           categorias={categorias} 
           categoriaSelecionada={categoriaSelecionada}
+          setReceitas={setReceitas}
+          setTotalPaginas={setTotalPaginas}
+
         />
         <Footer/>
       </main>

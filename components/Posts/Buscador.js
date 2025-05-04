@@ -14,9 +14,10 @@ import URLConfig from '../../Config/URLConfig'
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
+            console.log(data.content);
             setReceitas(data.content);
             setTotalPaginas(data.totalPages);
-            console.log(data.content);
+           
         }catch(error){
             console.error("Erro ao buscar posts:", error
             )
