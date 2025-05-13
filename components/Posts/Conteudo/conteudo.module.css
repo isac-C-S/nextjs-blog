@@ -362,7 +362,7 @@
 /* Style for inline admin actions */
 .adminActionsInline {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   animation: fadeIn 0.2s ease;
   padding: 0.2rem 0;
