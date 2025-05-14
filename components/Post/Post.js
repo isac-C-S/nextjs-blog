@@ -1,10 +1,12 @@
 import styles from './Post.module.css';
 import {BuscarRelacionados,CadastrarComentarioNaReceita,BuscarReceitaPorId,BuscarCategoriaDaReceita,BuscarIngredientesDareceita,BuscarModoPreparoDaReceita,BuscarComentariosDaReceita,BuscarCobertura} from './Buscador.js'
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useAuth } from '../../Config/AuthContext.js';
+import ModalEdit from '../modalEdit/ModalEdit.js';
 
 export default function Post({id}) {
+    const { isAdmin } = useAuth();
     const [Receita,setReceita] = useState([]);
     const [categoria,setCategoria] = useState("");
     const [ingredientes,setIngredientes] = useState([]);
@@ -18,6 +20,9 @@ export default function Post({id}) {
     const [comentario,setComentarios] = useState([]);
     const [commentLimit, setCommentLimit] = useState(3);
     const [relacionados,setRelacionados] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editType, setEditType] = useState(null);
+    const [editContent, setEditContent] = useState('');
     const steps = [
         "Antes de tudo, em uma tigela, junte a farinha de trigo, o açúcar, o chocolate em pó e o fermento químico. Misture bem para combinar todos os ingredientes secos, garantindo que o fermento esteja bem distribuído.",
         "Em seguida, em outra tigela, bata os ovos e adicione o leite. Depois, incorpore essa mistura aos ingredientes secos, mexendo bem até obter uma massa homogênea e sem grumos.",
@@ -167,30 +172,76 @@ export default function Post({id}) {
         setCommentLimit(comentario.length);
     };
 
+    const openModal = (type, content) => {
+        setEditType(type);
+        setEditContent(content);
+        setIsModalOpen(true);
+    };
+    
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setEditType(null);
+        setEditContent('');
+    };
+    
+    const handleSaveEdit = (newContent) => {
+        console.log(`Saving ${editType} with content: ${newContent}`);
+        
+        // For demonstration, update local state
+        if (editType === 'categoria') {
+            setCategoria(newContent);
+        } else if (editType === 'titulo') {
+            setReceita({...Receita, titulo: newContent});
+        } else if (editType === 'texto') {
+            setReceita({...Receita, texto: newContent});
+        } else if (editType === 'imagem') {
+            setReceita({...Receita, imagem: newContent});
+        }
+    };
+
     return (
         <div className={styles.post}>
+            <ModalEdit 
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                editType={editType}
+                content={editContent}
+                onSave={handleSaveEdit}
+            />
             <div className={styles.titulo}>
-                <h3>{categoria}</h3>
-                <h1>{Receita.titulo}</h1>
-                <p>{formatDate(Receita.dataPostagem)}</p>
+                <div>
+                     <h3>{categoria}</h3>
+                     {isAdmin && (<button className={styles.editButton} onClick={() => openModal('categoria', categoria)}>Editar Categoria</button>)}
+                </div>
+                
+                <div>
+                    <h1>{Receita.titulo}</h1>
+                    {isAdmin && (<button className={styles.editButton} onClick={() => openModal('titulo', Receita.titulo)}>Editar Título</button>)}
+                </div>
+                    <p>{formatDate(Receita.dataPostagem)}</p>
             </div>
 
             <div className={styles.introducao}>
-                <p>
-                    {Receita.texto}
-                </p>
-                <img 
-                    src={Receita.imagem} 
-                    alt={Receita.titulo} 
-                    style={{
-                        width: "100%", 
-                        height: "auto", 
-                        maxHeight: "500px",
-                        animation: "none",
-                        transition: "none",
-                        display: "block" // Ensures the image is a block element
-                    }}
-                />
+                <div>
+                    <p>{Receita.texto}</p>
+                    {isAdmin && (<button className={styles.editButton} onClick={() => openModal('texto', Receita.texto)}>Editar texto</button>)}
+                </div>
+                
+                
+                    <img 
+                        src={Receita.imagem} 
+                        alt={Receita.titulo} 
+                        style={{
+                            width: "100%", 
+                            height: "auto", 
+                            maxHeight: "500px",
+                            animation: "none",
+                            transition: "none",
+                            display: "block" // Ensures the image is a block element
+                        }}
+                    />
+                    {isAdmin && (<button className={styles.editButton} onClick={() => openModal('imagem', Receita.imagem)}>Editar Imagem</button>)}
+               
             </div>
 
             <div className={styles.ingredientes}>
