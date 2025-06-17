@@ -1,28 +1,53 @@
 import styles from './ModalEdit.module.css';
 import { useState, useEffect } from 'react';
-import {BuscarCategorias} from './buscador';
+import {BuscarCategorias,EditarCategoriaDaReceita,EditarTituloDaReceita,editarTextoDaReceita,AtualizarReceitaImagem} from './buscador';
 
-export default function ModalEdit({isOpen,  onClose, editType, content, onSave }) {
-    const [editedContent, setEditedContent] = useState('');
+
+export default function ModalEdit({isOpen,  onClose, editType, onSave,id,setCategoria,valorAtual }) {
+    const [editedContent, setEditedContent] = useState(1);
     const [categories, setCategories] = useState([]);
-    
-    useEffect(() => {
-        if (content) {
-            setEditedContent(content);
-        }
-    }, [content]);
+    const [imagemOriginal, setImagemOriginal] = useState(''); // Novo estado para a imagem original
+    const [imagemNova, setImagemNova] = useState(null); // Novo estado para o arquivo de imagem
 
     useEffect(() => {
-        if (editType === 'categoria') {
-            Categorias();
+        if (isOpen) {
+            if (editType === 'categoria') {
+                Categorias();
+                // Se valorAtual for o ID da categoria, você pode definir editedContent aqui:
+                // setEditedContent(valorAtual || ''); // Ou o valor inicial apropriado para categoria
+            } else if (editType === 'imagem') {
+                setEditedContent(valorAtual || ''); // Preenche o input com a URL da imagem atual
+                setImagemOriginal(valorAtual || ''); // Armazena a URL da imagem original
+            } else {
+                // Para outros tipos como 'titulo' ou 'texto'
+                setEditedContent(valorAtual || '');
+            }
+        } else {
+            // Resetar estados quando o modal é fechado para evitar dados obsoletos
+            setEditedContent('');
+            setImagemOriginal('');
+            // setCategories([]); // Considere resetar categorias também se forem buscadas a cada abertura
         }
-    }, [editType]);
+    }, [isOpen, editType, valorAtual]);
 
     if (!isOpen) return null;
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(editedContent);
+
+        if(editType === 'categoria') {
+          EditarCategoriaDaReceita(id, editedContent,setCategoria);
+        }
+        if(editType === 'titulo') {
+            EditarTituloDaReceita(id, editedContent,onSave);
+        }
+        if(editType === 'texto') {
+            editarTextoDaReceita(id, editedContent,onSave);
+        }
+        if(editType === 'imagem') {
+            // Envie o arquivo real (imagemNova) para AtualizarReceitaImagem
+            AtualizarReceitaImagem(id, imagemNova, imagemOriginal, onSave);
+        }
         onClose();
     };
 
@@ -69,15 +94,20 @@ export default function ModalEdit({isOpen,  onClose, editType, content, onSave }
             case 'imagem':
                 return (
                     <div className={styles.imageEditContainer}>
-                        <input 
-                            type="text" 
-                            value={editedContent} 
-                            onChange={(e) => setEditedContent(e.target.value)}
-                            placeholder="URL da imagem"
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    setImagemNova(file); // Salva o arquivo para upload
+                                    setEditedContent(file.name); // Apenas exibe o nome do arquivo
+                                }
+                            }}
                             className={styles.inputField}
                         />
                         <div className={styles.imagePreview}>
-                            {editedContent && <img src={editedContent} alt="Preview" />}
+                            {imagemNova && <img src={URL.createObjectURL(imagemNova)} alt="Preview" />}
                         </div>
                     </div>
                 );

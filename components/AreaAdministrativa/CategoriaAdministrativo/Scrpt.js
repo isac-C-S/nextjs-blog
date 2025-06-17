@@ -74,7 +74,7 @@ const uploadImageToCloudinary = async (file) => {
     formData.append('folder', 'categorias'); // definindo a pasta como "categorias"
     
     try {
-      const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'seu-cloud-name'}/image/upload`;
+      const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`;
       
       const response = await fetch(cloudinaryUrl, {
         method: 'POST',

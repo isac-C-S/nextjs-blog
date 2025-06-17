@@ -78,6 +78,7 @@ export default function Post({id}) {
                 imagem: "/pudim.jpg"
             }
         ];
+      
         
         setPostsRelacionados(exampleRelatedPosts);
     }, []);
@@ -207,6 +208,9 @@ export default function Post({id}) {
                 editType={editType}
                 content={editContent}
                 onSave={handleSaveEdit}
+                id={id}
+                setCategoria={setCategoria}
+                valorAtual={Receita.imagem}
             />
             <div className={styles.titulo}>
                 <div>
