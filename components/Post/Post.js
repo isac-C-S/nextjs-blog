@@ -1,5 +1,5 @@
 import styles from './Post.module.css';
-import {BuscarRelacionados,CadastrarComentarioNaReceita,BuscarReceitaPorId,BuscarCategoriaDaReceita,BuscarIngredientesDareceita,BuscarModoPreparoDaReceita,BuscarComentariosDaReceita,BuscarCobertura} from './Buscador.js'
+import {DeletarIngredienteDaReceita,BuscarRelacionados,CadastrarComentarioNaReceita,BuscarReceitaPorId,BuscarCategoriaDaReceita,BuscarIngredientesDareceita,BuscarModoPreparoDaReceita,BuscarComentariosDaReceita,BuscarCobertura} from './Buscador.js'
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../../Config/AuthContext.js';
@@ -188,7 +188,6 @@ export default function Post({id}) {
     const handleSaveEdit = (newContent) => {
         console.log(`Saving ${editType} with content: ${newContent}`);
         
-        // For demonstration, update local state
         if (editType === 'categoria') {
             setCategoria(newContent);
         } else if (editType === 'titulo') {
@@ -197,7 +196,17 @@ export default function Post({id}) {
             setReceita({...Receita, texto: newContent});
         } else if (editType === 'imagem') {
             setReceita({...Receita, imagem: newContent});
+        }else if (editType === 'ingrediente') {
+            setIngredientes([...ingredientes, newContent]);
         }
+    };
+
+    // Adicione a função para remover ingrediente
+    const handleDeleteIngrediente = (item,idx) => {
+        setIngredientes(ingredientes.filter((_, i) => i !== idx));
+      
+        DeletarIngredienteDaReceita(item.id);
+
     };
 
     return (
@@ -256,9 +265,24 @@ export default function Post({id}) {
                             ingredientes.map((item, idx) => (
                                 <li key={idx}>
                                     {item.quantidade ? `${item.quantidade} ` : ""}{item.nome}
+                                    {isAdmin && (
+                                        <button
+                                            className={styles.deleteIngrediente}
+                                            title="Remover ingrediente"
+                                            onClick={() => handleDeleteIngrediente(item,idx)}
+                                            type="button"
+                                        >
+                                            &times;
+                                        </button>
+                                    )}
                                 </li>
                             ))
                         ) : null}
+                        {isAdmin && (
+                        <li key="add-novo-ingrediente" className={styles.addIngrediente} onClick={() => openModal('ingrediente', Receita.ingrediente)}>
+                            Adicionar ingrediente
+                        </li>
+                        )}
                     </ul>
                 </div>
             </div>
@@ -453,6 +477,7 @@ export default function Post({id}) {
                     </form>
                 </div>
             </div>
+            {/* Fim do componente Post */}
         </div>
     );
 }

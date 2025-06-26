@@ -104,7 +104,7 @@ export const BuscarCategoriaDaReceita = async (id, setCategoria) => {
 
 export const BuscarIngredientesDareceita = async (id, setIngredientes) => {
     try {
-        const response = await fetch(`${URLConfig.BACKEND_URL}/IngredienteDaReceita/receita/${id}`, {
+        const response = await fetch(`${URLConfig.BACKEND_URL}/IngredienteDaReceita/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -245,3 +245,20 @@ export const BuscarRelacionados = async (id,categoria, setRelacionados) => {
     }
 
 };
+
+export const DeletarIngredienteDaReceita = async (id) => {
+    try {
+        const response = await fetch(`${URLConfig.BACKEND_URL}/IngredienteDaReceita/id/${id}`, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json',},
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao deletar o ingrediente da receita');
+        }
+
+    } catch (error) {
+        console.error('Erro:', error);
+        throw error;
+    }
+}

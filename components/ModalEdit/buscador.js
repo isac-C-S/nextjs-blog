@@ -82,6 +82,28 @@ export const editarTextoDaReceita = async (id, texto,onSave) => {
   onSave(data.texto);
 };
 
+export const AdicionarIngrediente = async (id, nomeIngrediente,quantidadeIngrediente,onSave) => {
+  const body = {
+    idReceita: id,
+    quantidade: quantidadeIngrediente,
+    nome: nomeIngrediente,
+  }
+
+  const response = await fetch(`${URLConfig.BACKEND_URL}/IngredienteDaReceita`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json',},
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw new Error('Erro ao adicionar o ingrediente');
+  }
+
+  const data = await response.json();
+  onSave(data);
+
+};
+
 // Função para fazer upload no Cloudinary
 const uploadImageToCloudinary = async (file,id) => {
     const formData = new FormData();
@@ -177,9 +199,9 @@ export async function AtualizarReceitaImagem( id, imagem, imagemAntiga,onSave) {
       console.error("Erro ao atualizar categoria:", error);
       return false;
     }
-  };
+};
 
-  const salvarImagem = async (id, imagem) => {
+const salvarImagem = async (id, imagem) => {
     try {
         const response = await fetch(`${URLConfig.BACKEND_URL}/Receita/editarImagem/${id}`, {
             method: 'PUT',
@@ -197,4 +219,4 @@ export async function AtualizarReceitaImagem( id, imagem, imagemAntiga,onSave) {
         console.error('Erro ao salvar a imagem:', error);
         return false;
     }
-  }
+};

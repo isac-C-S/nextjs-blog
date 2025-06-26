@@ -876,3 +876,64 @@
     background-color: #d32f2f;
     border-color: #d32f2f;
 }
+
+.addIngrediente {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff8da8 !important;
+    background: #fff;
+    border: 2px dashed #ff8da8;
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, border-color 0.2s;
+    outline: none;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.addIngrediente:hover, .addIngrediente:focus {
+    background: #ff8da8;
+    color: #fff;
+    border-color: #ff8da8;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.12);
+}
+
+.addIngrediente::before {
+    content: '+';
+    font-size: 1.3em;
+    margin-right: 10px;
+    color: inherit;
+    font-weight: bold;
+}
+
+.deleteIngrediente {
+    background: #fff;
+    color: #ff8da8;
+    border: 1.5px solid #ff8da8;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    margin-left: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-shadow: none;
+}
+
+.deleteIngrediente:hover, .deleteIngrediente:focus {
+    background: #ff8da8;
+    color: #fff;
+    border-color: #ff8da8;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.12);
+}

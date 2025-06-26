@@ -1,6 +1,6 @@
 import styles from './ModalEdit.module.css';
 import { useState, useEffect } from 'react';
-import {BuscarCategorias,EditarCategoriaDaReceita,EditarTituloDaReceita,editarTextoDaReceita,AtualizarReceitaImagem} from './buscador';
+import {AdicionarIngrediente,BuscarCategorias,EditarCategoriaDaReceita,EditarTituloDaReceita,editarTextoDaReceita,AtualizarReceitaImagem} from './buscador';
 
 
 export default function ModalEdit({isOpen,  onClose, editType, onSave,id,setCategoria,valorAtual }) {
@@ -8,6 +8,8 @@ export default function ModalEdit({isOpen,  onClose, editType, onSave,id,setCate
     const [categories, setCategories] = useState([]);
     const [imagemOriginal, setImagemOriginal] = useState(''); // Novo estado para a imagem original
     const [imagemNova, setImagemNova] = useState(null); // Novo estado para o arquivo de imagem
+    const [nomeIngrediente, setNomeIngrediente] = useState('');
+    const [quantidadeIngrediente, setQuantidadeIngrediente] = useState('');
 
     useEffect(() => {
         if (isOpen) {
@@ -45,8 +47,10 @@ export default function ModalEdit({isOpen,  onClose, editType, onSave,id,setCate
             editarTextoDaReceita(id, editedContent,onSave);
         }
         if(editType === 'imagem') {
-            // Envie o arquivo real (imagemNova) para AtualizarReceitaImagem
             AtualizarReceitaImagem(id, imagemNova, imagemOriginal, onSave);
+        }
+         if(editType === 'ingrediente') {
+            AdicionarIngrediente(id, nomeIngrediente,quantidadeIngrediente,onSave);
         }
         onClose();
     };
@@ -109,6 +113,23 @@ export default function ModalEdit({isOpen,  onClose, editType, onSave,id,setCate
                         <div className={styles.imagePreview}>
                             {imagemNova && <img src={URL.createObjectURL(imagemNova)} alt="Preview" />}
                         </div>
+                    </div>
+                );
+            case 'ingrediente':
+                return (
+                    <div className={styles.imageEditContainer}>
+                        <label>Nome:</label>
+                        <input
+                            type="text"
+                            onChange={(e) => {setNomeIngrediente(e.target.value)}}
+                            className={styles.inputField}
+                        />
+                        <label>Quantidade:</label>
+                        <input
+                         className={styles.inputField}
+                         onChange={(e) => {setQuantidadeIngrediente(e.target.value)}}
+                        >
+                        </input>
                     </div>
                 );
             default:
