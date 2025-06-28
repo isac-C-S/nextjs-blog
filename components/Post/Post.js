@@ -1,5 +1,5 @@
 import styles from './Post.module.css';
-import {DeletarIngredienteDaReceita,BuscarRelacionados,CadastrarComentarioNaReceita,BuscarReceitaPorId,BuscarCategoriaDaReceita,BuscarIngredientesDareceita,BuscarModoPreparoDaReceita,BuscarComentariosDaReceita,BuscarCobertura} from './Buscador.js'
+import {DeletarPassoDaReceita,DeletarIngredienteDaReceita,BuscarRelacionados,CadastrarComentarioNaReceita,BuscarReceitaPorId,BuscarCategoriaDaReceita,BuscarIngredientesDareceita,BuscarModoPreparoDaReceita,BuscarComentariosDaReceita,BuscarCobertura} from './Buscador.js'
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../../Config/AuthContext.js';
@@ -23,13 +23,7 @@ export default function Post({id}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editType, setEditType] = useState(null);
     const [editContent, setEditContent] = useState('');
-    const steps = [
-        "Antes de tudo, em uma tigela, junte a farinha de trigo, o açúcar, o chocolate em pó e o fermento químico. Misture bem para combinar todos os ingredientes secos, garantindo que o fermento esteja bem distribuído.",
-        "Em seguida, em outra tigela, bata os ovos e adicione o leite. Depois, incorpore essa mistura aos ingredientes secos, mexendo bem até obter uma massa homogênea e sem grumos.",
-        "Agora, despeje a massa em uma forma untada e enfarinhada. Leve ao forno preaquecido a 180 °C por 40 minutos, ou até que um palito inserido no centro do bolo saia limpo. Por fim, deixe o bolo esfriar antes de desenformar.",
-        "Em uma panela, então, leve ao fogo médio o achocolatado em pó, o açúcar, a margarina e o leite. Mexa constantemente até que todos os ingredientes estejam bem incorporados e a calda esteja homogênea e quente.",
-        "Com o bolo ainda quente, então, faça pequenos furos em toda a superfície utilizando um garfo. Despeje a calda quente sobre o bolo, garantindo que ela penetre bem nos furos. Deixe o bolo descansar e absorver a calda antes de servir, a fim de garantir que ele fique bem molhadinho e delicioso."
-    ];
+    const steps = ["Nenhum passo cadastrado"];
 
     // Buscar a receita pelo ID
     useEffect(() => {
@@ -198,14 +192,21 @@ export default function Post({id}) {
             setReceita({...Receita, imagem: newContent});
         }else if (editType === 'ingrediente') {
             setIngredientes([...ingredientes, newContent]);
+        }else if (editType === 'passo') {
+            setModoPreparo([...modoPreparo, newContent]);
         }
     };
 
     // Adicione a função para remover ingrediente
     const handleDeleteIngrediente = (item,idx) => {
         setIngredientes(ingredientes.filter((_, i) => i !== idx));
-      
-        DeletarIngredienteDaReceita(item.id);
+        DeletarIngredienteDaReceita(item.id); 
+    };
+
+    const handleDeletePasso = (item) => {
+        setModoPreparo(modoPreparo.filter((_, i) => i !== item.etapa));
+        console.log(item);
+        DeletarPassoDaReceita(item,setModoPreparo);
 
     };
 
@@ -329,6 +330,16 @@ export default function Post({id}) {
                                         <span>
                                             <strong>Passo {step.etapa}:</strong> {step.instrucao}
                                         </span>
+                                        {isAdmin && (
+                                        <button
+                                            className={styles.deleteIngrediente}
+                                            title="Remover Passo"
+                                            onClick={() => handleDeletePasso(step)}
+                                            type="button"
+                                        >
+                                            &times;
+                                        </button>
+                                    )}
                                     </li>
                                 ))
                             : steps.map((step, index) => (
@@ -336,9 +347,21 @@ export default function Post({id}) {
                                     <span>
                                         <strong>Passo {index + 1}:</strong> {step}
                                     </span>
+                                    
                                 </li>
+                                
+                              
+
                             ))
+                            
+                            
                         }
+                        
+                        {isAdmin && (
+                        <li key="add-novo-Passo" className={styles.addIngrediente} onClick={() => openModal('passo', Receita.passo)}>
+                            Adicionar Passo
+                        </li>
+                        )}
                     </ul>
                 </div>
             </div>
@@ -368,7 +391,11 @@ export default function Post({id}) {
                         ))
                     ) : (
                         <p>Nenhum post relacionado encontrado.</p>
+                        
                     )}
+                    <li key="add-novo-Passo" className={styles.addIngrediente} onClick={() => openModal('passo', Receita.passo)}>
+                            Adicionar Passo
+                        </li>
                 </div>
             </div>
 

@@ -1,6 +1,6 @@
 import styles from './ModalEdit.module.css';
 import { useState, useEffect } from 'react';
-import {AdicionarIngrediente,BuscarCategorias,EditarCategoriaDaReceita,EditarTituloDaReceita,editarTextoDaReceita,AtualizarReceitaImagem} from './buscador';
+import {AdicionarPasso,AdicionarIngrediente,BuscarCategorias,EditarCategoriaDaReceita,EditarTituloDaReceita,editarTextoDaReceita,AtualizarReceitaImagem} from './buscador';
 
 
 export default function ModalEdit({isOpen,  onClose, editType, onSave,id,setCategoria,valorAtual }) {
@@ -10,6 +10,7 @@ export default function ModalEdit({isOpen,  onClose, editType, onSave,id,setCate
     const [imagemNova, setImagemNova] = useState(null); // Novo estado para o arquivo de imagem
     const [nomeIngrediente, setNomeIngrediente] = useState('');
     const [quantidadeIngrediente, setQuantidadeIngrediente] = useState('');
+    const [modoPreparo, setModoPreparo] = useState({ etapa: '', instrucao: '' });
 
     useEffect(() => {
         if (isOpen) {
@@ -51,6 +52,9 @@ export default function ModalEdit({isOpen,  onClose, editType, onSave,id,setCate
         }
          if(editType === 'ingrediente') {
             AdicionarIngrediente(id, nomeIngrediente,quantidadeIngrediente,onSave);
+        }
+        if(editType === 'passo') {
+            AdicionarPasso(id,modoPreparo,onSave);
         }
         onClose();
     };
@@ -132,6 +136,23 @@ export default function ModalEdit({isOpen,  onClose, editType, onSave,id,setCate
                         </input>
                     </div>
                 );
+                 case 'passo':
+                return (
+                    <div className={styles.imageEditContainer}>
+                        <label>Etapa:</label>
+                        <input
+                            type="number"
+                            onChange={(e) => {setModoPreparo(({ ...modoPreparo, etapa: e.target.value }))}}
+                            className={styles.inputField}
+                        />
+                        <label>Instrução:</label>
+                        <input
+                            className={styles.inputField}
+                            onChange={(e) => {setModoPreparo(({ ...modoPreparo, instrucao: e.target.value }))}}
+                        >
+                        </input>
+                    </div>
+                );
             default:
                 return (
                     <input 
@@ -141,6 +162,7 @@ export default function ModalEdit({isOpen,  onClose, editType, onSave,id,setCate
                         className={styles.inputField}
                     />
                 );
+                
         }
     };
 

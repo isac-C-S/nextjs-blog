@@ -104,6 +104,26 @@ export const AdicionarIngrediente = async (id, nomeIngrediente,quantidadeIngredi
 
 };
 
+export const AdicionarPasso = async (id, modoPreparo, onSave) => {
+  const body = {
+    receita: id,
+    etapa: modoPreparo.etapa,
+    instrucao: modoPreparo.instrucao,
+  }
+  const response = await fetch(`${URLConfig.BACKEND_URL}/ModoPreparo`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json',},
+    body: JSON.stringify(body),
+  });
+  if (response.status === 400){
+    alert("Erro ao adicionar o passo, verifique se a etapa já existe");
+    
+  }else{
+    const data = await response.json();
+    onSave(data);
+  }
+}
+
 // Função para fazer upload no Cloudinary
 const uploadImageToCloudinary = async (file,id) => {
     const formData = new FormData();

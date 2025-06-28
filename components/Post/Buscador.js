@@ -256,6 +256,25 @@ export const DeletarIngredienteDaReceita = async (id) => {
         if (!response.ok) {
             throw new Error('Erro ao deletar o ingrediente da receita');
         }
+        
+
+    } catch (error) {
+        console.error('Erro:', error);
+        throw error;
+    }
+}
+
+export const DeletarPassoDaReceita = async (item,setModoPreparo) => {
+    try {
+        const response = await fetch(`${URLConfig.BACKEND_URL}/ModoPreparo/passo?receita=${item.receita}&etapa=${item.etapa}`, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json',},
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao deletar o passo da receita');
+        }
+        BuscarModoPreparoDaReceita(item.id, setModoPreparo);
 
     } catch (error) {
         console.error('Erro:', error);
